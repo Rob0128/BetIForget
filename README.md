@@ -32,3 +32,15 @@ It's also blazingly fast 🔥 No really, [try it out for yourself.](https://reac
 - `/context/AuthContext.tsx` is where you can find the `useUser` hook
   - This hook gives you access to the `user` object from Firebase Auth globally
 - `/Providers.tsx` is where you can add more `providers` or `wrappers`
+
+
+## More Starter Templates
+
+- [React Supabase Auth Template 🌟](https://github.com/mmvergara/react-supabase-auth-template)
+- [React Supabase ShadCN Auth Template](https://github.com/mmvergara/react-supabase-shadcn-auth-template)
+- [NextJs MongoDB Prisma Auth Template 🌟](https://github.com/mmvergara/nextjs-mongodb-prisma-auth-template)
+- [NextJs Discord Bot Template 🌟](https://github.com/mmvergara/nextjs-discord-bot-boilerplate)
+- [React Firebase🔥 Auth Template 🌟](https://github.com/mmvergara/react-firebase-auth-template)
+- [Golang Postgres Auth Template](https://github.com/mmvergara/golang-postgresql-auth-template)
+- [Vue Supabase Auth Template](https://github.com/mmvergara/vue-supabase-auth-starter-template)
+- [Remix Drizzle Auth Template](https://github.com/mmvergara/remix-drizzle-auth-template)
