@@ -5,8 +5,10 @@ import LoadingPage from "../pages/LoadingPage";
 
 export const UserDataContext = createContext<{
   user: User | null;
+  isLoading: boolean;
 }>({
   user: null,
+  isLoading: true
 });
 
 export const useUser = () => {
@@ -34,7 +36,7 @@ export const UserDataProvider = ({ children }: Props) => {
   }, [FirebaseAuth]);
 
   return (
-    <UserDataContext.Provider value={{ user }}>
+    <UserDataContext.Provider value={{ user, isLoading }}>
       {isLoading ? <LoadingPage /> : children}
     </UserDataContext.Provider>
   );

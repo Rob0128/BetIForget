@@ -10,7 +10,7 @@ const ProtectedPage = () => {
       </Link>
       <section className="main-container">
         <h1 className="header-text">This is a Protected Page</h1>
-        <p>Current User : {user?.displayName || "None"}</p>
+        <p>Current User : {user?.email || "None"}</p>
       </section>
     </main>
   );
