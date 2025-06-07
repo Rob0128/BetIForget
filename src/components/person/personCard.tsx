@@ -18,7 +18,7 @@ const PersonCard = ({
     setDeleting(true);
     setError(null);
     try {
-      await deletePerson(person); // You may want to use person.id or another unique identifier
+      await deletePerson(person);
       setShowConfirm(false);
       if (onPersonDeleted) onPersonDeleted();
     } catch (err) {
@@ -52,7 +52,7 @@ const PersonCard = ({
         <p><strong>Previous presents:</strong> {person.previousPresents}</p>
       </div>
       <button
-        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        className="mt-4 bg-orange-700 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
         onClick={() => setShowConfirm(true)}
       >
         Delete

@@ -25,7 +25,7 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col items-center gap-y-12 px-4 py-8">
-      <section className="max-w-md bg-neutral-800 rounded-lg p-6 mx-auto text-center shadow-lg">
+      <section style={{ color: "#11284c" }} className="max-w-md rounded-lg p-6 mx-auto text-center">
         <h1 className="text-2xl font-bold mb-4">React Firebase Auth Template</h1>
         <p className="mb-4">Current User: {user?.email || "None"}</p>
       </section>

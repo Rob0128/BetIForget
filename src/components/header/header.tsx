@@ -3,16 +3,23 @@ import { Link } from "react-router-dom";
 import { useUser } from "../../context/AuthContext";
 import { FirebaseAuth } from "../../firebase";
 import { Menu, X } from "lucide-react";
+import clockLogoImg from '../../assets/clocklogo.png'; 
 
 const Header = () => {
   const { user } = useUser();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-neutral-900 text-white px-6 py-4 flex justify-between items-center shadow-md">
-      <Link to="/" className="text-xl font-bold">
-        Forgettory 🔐
-      </Link>
+    <header style={{ color: "#11284c" }} className="w-full text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <Link to="/" className="text-xl font-bold flex items-center gap-2">
+            The Forgettening 
+            <img
+            src={clockLogoImg}
+            alt="present"
+            className="w-15 h-15 rounded-full"
+            style={{ paddingTop: 5 }}
+          />
+          </Link>
 
       {/* Hamburger Button */}
       <button
@@ -27,11 +34,11 @@ const Header = () => {
       <div
         className={`${
           menuOpen ? "flex" : "hidden"
-        } absolute top-16 left-0 w-full bg-neutral-900 flex-col items-center gap-4 py-4 md:static md:flex md:flex-row md:gap-4 md:w-auto md:py-0`}
+        } absolute top-16 left-0 w-full flex-col items-center gap-4 py-4 md:static md:flex md:flex-row md:gap-4 md:w-auto md:py-0`}
       >
         <Link
           to="/protected"
-          className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded text-center"
+          className="bg-neutral-100 hover:bg-neutral-200 text-sky-700 font-bold py-2 px-4 rounded text-center"
           onClick={() => setMenuOpen(false)}
         >
           Protected Page
@@ -42,7 +49,7 @@ const Header = () => {
               FirebaseAuth.signOut();
               setMenuOpen(false);
             }}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded cursor-pointer"
           >
             Sign Out
           </button>

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import presentImg from '../../assets/present.png'; 
 import { Person } from '../../firebase/models/person';
 import { addPerson } from '../../firebase/services/personCardService';
 import { useUser } from "../../context/AuthContext";
@@ -60,20 +59,23 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
   };
 
   return (
-    <div className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900">
-      <img
-        src={presentImg}
-        alt={"present"}
-        className="w-24 h-24 rounded-full shadow mb-4"
-      />
-      <h2 className="text-xl font-semibold">Add person</h2>
-      <div className="text-sm">
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4"
-          onClick={() => setShowPopup(true)}
-        >
-          Add Person
-        </button>
+    <div className="max-w-sm w-full mx-auto bg-white rounded-2xloverflow-hidden flex flex-col items-center p-6 text-gray-900">
+      <div
+        className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900 cursor-pointer transition hover:shadow-lg"
+        onClick={() => setShowPopup(true)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={e => {
+          if (e.key === "Enter" || e.key === " ") setShowPopup(true);
+        }}
+        aria-label="Add person"
+      >
+        <div className="flex items-center justify-center w-14 h-14 rounded-full bg-cyan-700 text-white text-3xl mb-2 shadow transition">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+        <h2 className="text-xl font-semibold mb-2">Add person</h2>
       </div>
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
@@ -131,7 +133,7 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                   />
                   <button
                     type="button"
-                    className="bg-green-500 text-white px-2 py-1 rounded"
+                    className="bg-green-500 text-white px-2 py-1 rounded cursor-pointer hover:bg-green-600"
                     onClick={handleAddDate}
                   >
                     Add Date
