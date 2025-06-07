@@ -1,6 +1,7 @@
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { FirebaseFirestore } from "../index";
 import { Person } from "../models/person";
+import { doc, deleteDoc } from "firebase/firestore";
 
 // Add a new PersonCard
 export const addPerson = async (card: Person) => {
@@ -18,7 +19,7 @@ export const getPeople = async () => {
   return querySnapshot.docs.map(doc => {
     const data = doc.data();
     return {
-      // id: doc.id, // include if you want, but not required for Person
+      id: doc.id,
       name: data.name,
       datesINeedAPresent: data.datesINeedAPresent,
       previousPresents: data.previousPresents,
@@ -26,4 +27,9 @@ export const getPeople = async () => {
       userId: data.userId,
     } as Person;
   });
+};
+
+export const deletePerson = async (person: Person & { id?: string }) => {
+  if (!person.id) throw new Error("Missing person id");
+  await deleteDoc(doc(FirebaseFirestore, "personCards", person.id));
 };

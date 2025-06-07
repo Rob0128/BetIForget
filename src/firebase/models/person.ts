@@ -4,4 +4,5 @@ export interface Person {
   previousPresents: string;
   interests: string;
   userId: string;
-} 
+  id?: string;
+}
