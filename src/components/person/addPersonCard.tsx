@@ -8,6 +8,9 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [name, setName] = useState("");
   const [interests, setInterests] = useState("");
+  const [age, setAge] = useState("");
+  const [budget, setBudget] = useState("");
+  const [gender, setGender] = useState("");
   const [previousPresents, setPreviousPresents] = useState("");
   const [dates, setDates] = useState<{ month: number; day: number }[]>([]);
   const [month, setMonth] = useState<number>(0);
@@ -41,6 +44,9 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       name,
       datesINeedAPresent: dates,
       previousPresents,
+      age,
+      gender,
+      budget,
       interests,
       userId: user.uid
     };
@@ -50,6 +56,9 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       setName("");
       setInterests("");
       setPreviousPresents("");
+      setGender("");
+      setAge("");
+      setBudget("");
       setDates([]);
       onPersonAdded();
     } catch (error) {
@@ -59,27 +68,31 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
   };
 
   return (
-    <div className="max-w-sm w-full mx-auto bg-white rounded-2xloverflow-hidden flex flex-col items-center p-6 text-gray-900">
-      <div
-        className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900 cursor-pointer transition hover:shadow-lg"
-        onClick={() => setShowPopup(true)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={e => {
-          if (e.key === "Enter" || e.key === " ") setShowPopup(true);
-        }}
-        aria-label="Add person"
-      >
-        <div className="flex items-center justify-center w-14 h-14 rounded-full bg-cyan-700 text-white text-3xl mb-2 shadow transition">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-          </svg>
+    <>
+      {/* Card */}
+      <div className="max-w-sm w-full mx-auto flex flex-col items-center p-6 text-gray-900">
+        <div
+          className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900 cursor-pointer transition hover:shadow-lg"
+          onClick={() => setShowPopup(true)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => {
+            if (e.key === "Enter" || e.key === " ") setShowPopup(true);
+          }}
+          aria-label="Add person"
+        >
+          <div className="flex items-center justify-center w-14 h-14 rounded-full bg-red-700/75 text-white text-3xl mb-2 shadow transition">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold mb-2">Add person</h2>
         </div>
-        <h2 className="text-xl font-semibold mb-2">Add person</h2>
       </div>
+      {/* Modal */}
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-          <div className="bg-white rounded-lg p-6 shadow-lg w-full max-w-md relative">
+          <div className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900 relative">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
               onClick={() => setShowPopup(false)}
@@ -87,7 +100,7 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
               ×
             </button>
             <h3 className="text-lg font-bold mb-4">New Person</h3>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
               <input
                 type="text"
                 placeholder="Name"
@@ -102,6 +115,27 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                 className="border rounded px-2 py-1"
                 value={interests}
                 onChange={e => setInterests(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Gender"
+                className="border rounded px-2 py-1"
+                value={gender}
+                onChange={e => setGender(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Age"
+                className="border rounded px-2 py-1"
+                value={age}
+                onChange={e => setAge(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Budget"
+                className="border rounded px-2 py-1"
+                value={budget}
+                onChange={e => setBudget(e.target.value)}
               />
               <input
                 type="text"
@@ -165,7 +199,7 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

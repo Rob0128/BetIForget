@@ -10,7 +10,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header style={{ color: "#11284c" }} className="w-full text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <header style={{ color: "#11284c" }} className="w-full bg-neutral-100 text-white px-6 py-4 flex justify-between items-center shadow-md">
     <Link to="/" className="text-xl font-bold flex items-center gap-2">
             The Forgettening 
             <img
@@ -38,7 +38,7 @@ const Header = () => {
       >
         <Link
           to="/protected"
-          className="bg-neutral-100 hover:bg-neutral-200 text-sky-700 font-bold py-2 px-4 rounded text-center"
+          className="bg-orange-300 hover:bg-neutral-200 text-gray-100 font-bold py-2 px-4 rounded text-center"
           onClick={() => setMenuOpen(false)}
         >
           Protected Page
@@ -49,7 +49,7 @@ const Header = () => {
               FirebaseAuth.signOut();
               setMenuOpen(false);
             }}
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded cursor-pointer"
+            className="bg-neutral-900 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded cursor-pointer"
           >
             Sign Out
           </button>

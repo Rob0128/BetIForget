@@ -23,6 +23,9 @@ export const getPeople = async () => {
       name: data.name,
       datesINeedAPresent: data.datesINeedAPresent,
       previousPresents: data.previousPresents,
+      age: data.age,
+      gender: data.gender,
+      budget: data.budget,
       interests: data.interests,
       userId: data.userId,
     } as Person;

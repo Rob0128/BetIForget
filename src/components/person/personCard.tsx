@@ -6,9 +6,11 @@ import { deletePerson } from '../../firebase/services/personCardService';
 const PersonCard = ({
   person,
   onPersonDeleted,
+  isModal = false,
 }: {
   person: Person;
   onPersonDeleted?: () => void;
+  isModal?: boolean;
 }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -29,8 +31,8 @@ const PersonCard = ({
     }
   };
 
-  return (
-    <div className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900">
+  const content = (
+    <>
       <img
         src={presentImg}
         alt={"present"}
@@ -50,6 +52,9 @@ const PersonCard = ({
           <span> None</span>
         )}
         <p><strong>Previous presents:</strong> {person.previousPresents}</p>
+        <p><strong>Age:</strong> {person.age}</p>
+        <p><strong>Gender:</strong> {person.gender}</p>
+        <p><strong>Budget:</strong> {person.budget}</p>
       </div>
       <button
         className="mt-4 bg-orange-700 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
@@ -81,6 +86,14 @@ const PersonCard = ({
           </div>
         </div>
       )}
+    </>
+  );
+
+  return isModal ? (
+    <div className="flex flex-col items-center">{content}</div>
+  ) : (
+    <div className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900">
+      {content}
     </div>
   );
 };
