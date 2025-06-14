@@ -1,7 +1,6 @@
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { FirebaseFirestore } from "../index";
 import { Person } from "../models/person";
-import { doc, deleteDoc } from "firebase/firestore";
 
 // Add a new PersonCard
 export const addPerson = async (card: Person) => {
@@ -36,4 +35,22 @@ export const getPeople = async () => {
 export const deletePerson = async (person: Person & { id?: string }) => {
   if (!person.id) throw new Error("Missing person id");
   await deleteDoc(doc(FirebaseFirestore, "personCards", person.id));
+};
+
+// Tag persistence
+const TAGS_DOC_ID = "global_tags";
+
+export const getAllTags = async (): Promise<string[]> => {
+  const tagsDoc = await getDocs(collection(FirebaseFirestore, "tags"));
+  if (!tagsDoc.empty) {
+    // Only one doc expected
+    const docData = tagsDoc.docs[0].data();
+    return docData.tags || [];
+  }
+  return [];
+};
+
+export const saveTags = async (tags: string[]) => {
+  // Save to a single doc in the 'tags' collection
+  await setDoc(doc(FirebaseFirestore, "tags", TAGS_DOC_ID), { tags });
 };

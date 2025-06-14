@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Person, Gender } from '../../firebase/models/person';
-import { addPerson } from '../../firebase/services/personCardService';
+import { addPerson, getAllTags, saveTags } from '../../firebase/services/personCardService';
 import { useUser } from "../../context/AuthContext";
+
+// Example initial tag list
+const DEFAULT_TAGS = [
+  "Books", "Music", "Sports", "Cooking", "Travel", "Tech", "Fashion", "Fitness", "Outdoors", "Movies", "Art", "Photography", "Gaming", "Gardening", "Pets", "DIY", "Science", "History", "Cars", "Food", "Crafts", "Collecting", "Writing", "Dancing", "Yoga"
+];
 
 const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
   const { user, isLoading } = useUser();
   const [showPopup, setShowPopup] = useState(false);
   const [name, setName] = useState("");
-  const [interests, setInterests] = useState("");
+  const [interests, setInterests] = useState<string[]>([]);
+  const [interestInput, setInterestInput] = useState("");
+  const [allTags, setAllTags] = useState<string[]>(DEFAULT_TAGS);
   const [age, setAge] = useState("");
   const [budgetMin, setBudgetMin] = useState("");
   const [budgetMax, setBudgetMax] = useState("");
@@ -17,9 +24,17 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
   const [month, setMonth] = useState<number>(0);
   const [day, setDay] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   if (isLoading) return <div>Loading...</div>;
   if (!user) return <div>Please log in</div>;
+
+  // Load tags from Firestore on mount
+  useEffect(() => {
+    getAllTags().then(tags => {
+      if (tags.length > 0) setAllTags(tags);
+    });
+  }, []);
 
   const handleAddDate = () => {
     if (
@@ -33,6 +48,28 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
   const handleRemoveDate = (idx: number) => {
     setDates(dates.filter((_, i) => i !== idx));
   };
+
+  const handleAddInterest = async (tag: string) => {
+    if (!tag.trim() || interests.includes(tag)) return;
+    setInterests([...interests, tag]);
+    if (!allTags.includes(tag)) {
+      const newTags = [...allTags, tag];
+      setAllTags(newTags);
+      await saveTags(newTags);
+    }
+    setInterestInput("");
+    if (inputRef.current) inputRef.current.focus();
+  };
+
+  const handleRemoveInterest = (tag: string) => {
+    setInterests(interests.filter(t => t !== tag));
+  };
+
+  const filteredTags = interestInput
+    ? allTags.filter(
+        t => t.toLowerCase().includes(interestInput.toLowerCase()) && !interests.includes(t)
+      )
+    : allTags.filter(t => !interests.includes(t));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +92,17 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       setError("Budget min must be less than budget max.");
       return;
     }
+    // Auto-add current input if not empty and not already in interests
+    let newInterests = [...interests];
+    if (interestInput.trim() && !newInterests.includes(interestInput.trim())) {
+      newInterests.push(interestInput.trim());
+      // Also add to tags in Firestore
+      if (!allTags.includes(interestInput.trim())) {
+        const updatedTags = [...allTags, interestInput.trim()];
+        setAllTags(updatedTags);
+        await saveTags(updatedTags);
+      }
+    }
     setError(null);
     const person: Person = {
       name,
@@ -64,14 +112,16 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       gender,
       budgetMin: min,
       budgetMax: max,
-      interests,
+      interests: newInterests.join(", "),
       userId: user.uid
     };
     try {
       await addPerson(person);
       setShowPopup(false);
       setName("");
-      setInterests("");
+      setInterests([]);
+      setInterestInput("");
+      // Don't reset allTags, keep the latest from Firestore
       setPreviousPresents("");
       setGender("other");
       setAge("");
@@ -111,11 +161,11 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       {showPopup && (
         <div
           className="fixed inset-0 flex items-center justify-center bg-black/75 bg-opacity-40 z-50"
-          onClick={() => setShowPopup(false)} // <-- closes on background click
+          onClick={() => setShowPopup(false)}
         >
           <div
             className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900 relative"
-            onClick={e => e.stopPropagation()} // <-- prevents closing when clicking inside the card
+            onClick={e => e.stopPropagation()}
           >
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
@@ -133,13 +183,57 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                 onChange={e => setName(e.target.value)}
                 required
               />
-              <input
-                type="text"
-                placeholder="Interests"
-                className="border rounded px-2 py-1"
-                value={interests}
-                onChange={e => setInterests(e.target.value)}
-              />
+              {/* Interests tag input */}
+              <div>
+                <label className="block mb-1 font-medium">Interests</label>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {interests.map(tag => (
+                    <span key={tag} className="bg-blue-200 text-blue-800 px-2 py-1 rounded-full flex items-center">
+                      {tag}
+                      <button
+                        type="button"
+                        className="ml-1 text-red-500 hover:text-red-700"
+                        onClick={() => handleRemoveInterest(tag)}
+                        aria-label={`Remove ${tag}`}
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <div className="relative">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    className="border rounded px-2 py-1 w-full"
+                    placeholder="Type to search or add..."
+                    value={interestInput}
+                    onChange={e => setInterestInput(e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === "Enter" && interestInput.trim()) {
+                        e.preventDefault();
+                        handleAddInterest(interestInput.trim());
+                      }
+                    }}
+                  />
+                  {interestInput && filteredTags.length > 0 && (
+                    <ul className="absolute z-10 bg-white border rounded w-full mt-1 max-h-32 overflow-y-auto shadow">
+                      {filteredTags.map(tag => (
+                        <li
+                          key={tag}
+                          className="px-2 py-1 hover:bg-blue-100 cursor-pointer"
+                          onClick={() => handleAddInterest(tag)}
+                        >
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                {interestInput && filteredTags.length === 0 && (
+                  <div className="text-xs text-gray-500 mt-1">Press Enter to add "{interestInput}"</div>
+                )}
+              </div>
               <select
                 className="border rounded px-2 py-1"
                 value={gender}
