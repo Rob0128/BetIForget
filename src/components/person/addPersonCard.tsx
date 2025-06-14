@@ -49,7 +49,28 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
     setDates(dates.filter((_, i) => i !== idx));
   };
 
+  // List of basic offensive words (expand as needed)
+  const OFFENSIVE_WORDS = [
+    "fuck", "shit", "bitch", "asshole", "bastard", "dick", "cunt", "piss", "slut", "whore", "fag", "nigger", "nigga", "coon", "retard", "crap", "damn", "hell", "wank", "twat", "prick", "cock", "pussy", "bollocks", "arse", "bugger", "douche"
+  ];
+
+  // Helper: Validate interest
+  function isValidInterest(tag: string): string | null {
+    const trimmed = tag.trim();
+    if (!trimmed) return "Interest cannot be empty.";
+    if (trimmed.split(/\s+/).length > 2) return "Interest must be no more than 2 words.";
+    if (/[^a-zA-Z0-9\s]/.test(trimmed)) return "Interest cannot contain special characters.";
+    const lower = trimmed.toLowerCase();
+    if (OFFENSIVE_WORDS.some(word => lower.includes(word))) return "Interest contains inappropriate language.";
+    return null;
+  }
+
   const handleAddInterest = async (tag: string) => {
+    const validationError = isValidInterest(tag);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     if (!tag.trim() || interests.includes(tag)) return;
     setInterests([...interests, tag]);
     if (!allTags.includes(tag)) {
@@ -58,6 +79,7 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       await saveTags(newTags);
     }
     setInterestInput("");
+    setError(null);
     if (inputRef.current) inputRef.current.focus();
   };
 
@@ -95,6 +117,11 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
     // Auto-add current input if not empty and not already in interests
     let newInterests = [...interests];
     if (interestInput.trim() && !newInterests.includes(interestInput.trim())) {
+      const validationError = isValidInterest(interestInput.trim());
+      if (validationError) {
+        setError(validationError);
+        return;
+      }
       newInterests.push(interestInput.trim());
       // Also add to tags in Firestore
       if (!allTags.includes(interestInput.trim())) {
