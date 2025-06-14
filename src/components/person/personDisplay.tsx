@@ -36,31 +36,31 @@ const DisplayPeople = ({
 
       {/* Modal for selected person */}
       {selectedPerson && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
-          onClick={() => setSelectedPerson(null)}
-        >
-          <div
-            className="bg-white rounded-2xl shadow-lg p-8 max-w-lg w-full relative text-gray-900"
-            onClick={e => e.stopPropagation()}
-          >
-            <PersonCard
-              person={selectedPerson}
-              onPersonDeleted={() => {
-                setSelectedPerson(null);
-                onPersonDeleted();
-              }}
-              isModal={true}
-            />
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl"
-              onClick={() => setSelectedPerson(null)}
-            >
-              ×
-            </button>
-          </div>
-        </div>
-      )}
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/75"
+    onClick={() => setSelectedPerson(null)} // <-- closes modal on background click
+  >
+    <div
+      className="bg-white rounded-2xl shadow-lg p-8 max-w-lg w-full relative text-gray-900"
+      onClick={e => e.stopPropagation()} // <-- prevents closing when clicking inside card
+    >
+      <PersonCard
+        person={selectedPerson}
+        onPersonDeleted={() => {
+          setSelectedPerson(null);
+          onPersonDeleted();
+        }}
+        isModal={true}
+      />
+      <button
+        className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl"
+        onClick={() => setSelectedPerson(null)}
+      >
+        ×
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 };

@@ -91,8 +91,14 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       </div>
       {/* Modal */}
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-          <div className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900 relative">
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black/75 bg-opacity-40 z-50"
+          onClick={() => setShowPopup(false)} // <-- closes on background click
+        >
+          <div
+            className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900 relative"
+            onClick={e => e.stopPropagation()} // <-- prevents closing when clicking inside the card
+          >
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
               onClick={() => setShowPopup(false)}
@@ -100,7 +106,7 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
               ×
             </button>
             <h3 className="text-lg font-bold mb-4">New Person</h3>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full"> 
               <input
                 type="text"
                 placeholder="Name"
