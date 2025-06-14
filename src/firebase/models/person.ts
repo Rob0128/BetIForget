@@ -1,11 +1,14 @@
+export type Gender = "male" | "female" | "other";
+
 export interface Person {
   name: string;
   datesINeedAPresent: { month: number; day: number }[];
   previousPresents: string;
-  gender: string;
+  gender: Gender;
   age: string;
-  budget: string;
+  budgetMin: number;
+  budgetMax: number;
   interests: string;
   userId: string;
   id?: string;
-}
+} 

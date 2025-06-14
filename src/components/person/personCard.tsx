@@ -53,8 +53,8 @@ const PersonCard = ({
         )}
         <p><strong>Previous presents:</strong> {person.previousPresents}</p>
         <p><strong>Age:</strong> {person.age}</p>
-        <p><strong>Gender:</strong> {person.gender}</p>
-        <p><strong>Budget:</strong> {person.budget}</p>
+        <p><strong>Gender:</strong> {person.gender ? (person.gender.charAt(0).toUpperCase() + person.gender.slice(1)) : "Unknown"}</p>
+        <p><strong>Budget:</strong> ${person.budgetMin} - ${person.budgetMax}</p>
       </div>
       <button
         className="mt-4 bg-orange-700 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"

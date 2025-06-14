@@ -25,7 +25,8 @@ export const getPeople = async () => {
       previousPresents: data.previousPresents,
       age: data.age,
       gender: data.gender,
-      budget: data.budget,
+      budgetMin: data.budgetMin,
+      budgetMax: data.budgetMax,
       interests: data.interests,
       userId: data.userId,
     } as Person;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Person } from '../../firebase/models/person';
+import { Person, Gender } from '../../firebase/models/person';
 import { addPerson } from '../../firebase/services/personCardService';
 import { useUser } from "../../context/AuthContext";
 
@@ -9,8 +9,9 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
   const [name, setName] = useState("");
   const [interests, setInterests] = useState("");
   const [age, setAge] = useState("");
-  const [budget, setBudget] = useState("");
-  const [gender, setGender] = useState("");
+  const [budgetMin, setBudgetMin] = useState("");
+  const [budgetMax, setBudgetMax] = useState("");
+  const [gender, setGender] = useState<Gender>("other");
   const [previousPresents, setPreviousPresents] = useState("");
   const [dates, setDates] = useState<{ month: number; day: number }[]>([]);
   const [month, setMonth] = useState<number>(0);
@@ -39,6 +40,21 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       setError("Name is required.");
       return;
     }
+    // Budget validation
+    const min = Number(budgetMin);
+    const max = Number(budgetMax);
+    if (!Number.isInteger(min) || min <= 0) {
+      setError("Budget min must be a positive whole number.");
+      return;
+    }
+    if (!Number.isInteger(max) || max <= 0) {
+      setError("Budget max must be a positive whole number.");
+      return;
+    }
+    if (min >= max) {
+      setError("Budget min must be less than budget max.");
+      return;
+    }
     setError(null);
     const person: Person = {
       name,
@@ -46,7 +62,8 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       previousPresents,
       age,
       gender,
-      budget,
+      budgetMin: min,
+      budgetMax: max,
       interests,
       userId: user.uid
     };
@@ -56,9 +73,10 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       setName("");
       setInterests("");
       setPreviousPresents("");
-      setGender("");
+      setGender("other");
       setAge("");
-      setBudget("");
+      setBudgetMin("");
+      setBudgetMax("");
       setDates([]);
       onPersonAdded();
     } catch (error) {
@@ -122,13 +140,16 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                 value={interests}
                 onChange={e => setInterests(e.target.value)}
               />
-              <input
-                type="text"
-                placeholder="Gender"
+              <select
                 className="border rounded px-2 py-1"
                 value={gender}
-                onChange={e => setGender(e.target.value)}
-              />
+                onChange={e => setGender(e.target.value as Gender)}
+                required
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
               <input
                 type="text"
                 placeholder="Age"
@@ -136,13 +157,26 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                 value={age}
                 onChange={e => setAge(e.target.value)}
               />
-              <input
-                type="text"
-                placeholder="Budget"
-                className="border rounded px-2 py-1"
-                value={budget}
-                onChange={e => setBudget(e.target.value)}
-              />
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  placeholder="Budget Min"
+                  className="border rounded px-2 py-1 w-1/2"
+                  value={budgetMin}
+                  onChange={e => setBudgetMin(e.target.value)}
+                  min={1}
+                  required
+                />
+                <input
+                  type="number"
+                  placeholder="Budget Max"
+                  className="border rounded px-2 py-1 w-1/2"
+                  value={budgetMax}
+                  onChange={e => setBudgetMax(e.target.value)}
+                  min={1}
+                  required
+                />
+              </div>
               <input
                 type="text"
                 placeholder="Previous Presents"
