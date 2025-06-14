@@ -25,7 +25,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <aside className="w-64 min-h-screen bg-gradient-to-b from-[#ffb86a] to-[#f19086] text-white p-8 hidden md:flex flex-col shadow-xl">
               <div className="mb-8">
                 <span className="text-2xl font-extrabold tracking-tight text-white">Forgettory</span>
-                <div className="mt-2 h-1 w-10 bg-cyan-400 rounded"></div>
+                <div className="mt-2 h-1 w-10 bg-cyan-800 rounded"></div>
               </div>
               <nav className="flex-1">
                 <ul className="space-y-2">
@@ -34,7 +34,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                       href="/"
                       className="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-lg hover:bg-cyan-700 transition group"
                     >
-                      <Home className="w-5 h-5 text-cyan-300 group-hover:text-white" />
+                      <Home className="w-5 h-5 text-cyan-800 group-hover:text-white" />
                       Home
                     </a>
                   </li>
@@ -43,7 +43,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                       href="/protected"
                       className="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-lg hover:bg-cyan-700 transition group"
                     >
-                      <Lock className="w-5 h-5 text-cyan-300 group-hover:text-white" />
+                      <Lock className="w-5 h-5 text-cyan-800 group-hover:text-white" />
                       Protected
                     </a>
                   </li>
@@ -52,7 +52,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                       href="/settings"
                       className="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-lg hover:bg-cyan-700 transition group"
                     >
-                      <Settings className="w-5 h-5 text-cyan-300 group-hover:text-white" />
+                      <Settings className="w-5 h-5 text-cyan-800 group-hover:text-white" />
                       Settings
                     </a>
                   </li>

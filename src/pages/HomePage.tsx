@@ -25,9 +25,9 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col items-center gap-y-12 px-4 py-8">
-      <section className="max-w-md rounded-lg p-6 text-neutral-900 mx-auto text-center">
-        <h1 className="text-2xl text-neutral-900 font-bold mb-4">React Firebase Auth Template</h1>
-        <p className="mb-4 text-rose-400">Current User: {user?.email || "None"}</p>
+      <section className="max-w rounded-lg p-6 text-neutral-900 mx-auto text-center">
+        <h1 className="text-5xl text-cyan-800 mb-4 tracking-tight font-mono">Add Some People You Need To Remember</h1>
+        <p className="mb-4 text-neutral-700 font-semibold">Current User: {user?.email || "None"}</p>
       </section>
       {user && (
         <div className="w-full flex flex-wrap justify-center gap-6 px-4">

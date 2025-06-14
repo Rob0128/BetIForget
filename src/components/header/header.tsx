@@ -10,16 +10,15 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header style={{ color: "#11284c" }} className="w-full bg-neutral-100 text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <header className="w-full bg-neutral-100 text-cyan-800 px-6 py-4 flex justify-between items-center shadow-md">
     <Link to="/" className="text-xl font-bold flex items-center gap-2">
-            The Forgettening 
-            <img
-            src={clockLogoImg}
-            alt="present"
-            className="w-15 h-15 rounded-full"
-            style={{ paddingTop: 5 }}
-          />
-          </Link>
+      The Forgettening 
+      <img
+        src={clockLogoImg}
+        alt="present"
+        className="w-13 h-14 rounded-full align-middle"
+      />
+    </Link>
 
       {/* Hamburger Button */}
       <button
