@@ -28,6 +28,7 @@ export const getPeople = async () => {
       budgetMax: data.budgetMax,
       interests: data.interests,
       userId: data.userId,
+      brands: data.brands, // <-- FIX: include brands field
     } as Person;
   });
 };
@@ -38,13 +39,13 @@ export const deletePerson = async (person: Person & { id?: string }) => {
 };
 
 // Tag persistence
-const TAGS_DOC_ID = "global_tags";
+const TAGS_DOC_ID = "global_interest_tags"; // changed to avoid conflict
 
 export const getAllTags = async (): Promise<string[]> => {
   const tagsDoc = await getDocs(collection(FirebaseFirestore, "tags"));
   if (!tagsDoc.empty) {
     // Only one doc expected
-    const docData = tagsDoc.docs[0].data();
+    const docData = tagsDoc.docs.find(doc => doc.id === TAGS_DOC_ID)?.data() || tagsDoc.docs[0].data();
     return docData.tags || [];
   }
   return [];
@@ -53,4 +54,22 @@ export const getAllTags = async (): Promise<string[]> => {
 export const saveTags = async (tags: string[]) => {
   // Save to a single doc in the 'tags' collection
   await setDoc(doc(FirebaseFirestore, "tags", TAGS_DOC_ID), { tags });
+};
+
+// Brand persistence
+const BRANDS_DOC_ID = "global_brand_tags"; // changed to avoid conflict
+
+export const getAllBrands = async (): Promise<string[]> => {
+  const brandsDoc = await getDocs(collection(FirebaseFirestore, "brands"));
+  if (!brandsDoc.empty) {
+    // Only one doc expected
+    const docData = brandsDoc.docs.find(doc => doc.id === BRANDS_DOC_ID)?.data() || brandsDoc.docs[0].data();
+    return docData.brands || [];
+  }
+  return [];
+};
+
+export const saveBrands = async (brands: string[]) => {
+  // Save to a single doc in the 'brands' collection
+  await setDoc(doc(FirebaseFirestore, "brands", BRANDS_DOC_ID), { brands });
 };

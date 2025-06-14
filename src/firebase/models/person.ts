@@ -11,4 +11,5 @@ export interface Person {
   interests: string;
   userId: string;
   id?: string;
-} 
+  brands?: string;
+}

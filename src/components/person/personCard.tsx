@@ -38,23 +38,25 @@ const PersonCard = ({
         alt={"present"}
         className="w-24 h-24 rounded-full shadow mb-4"
       />
-      <h2 className="text-xl font-semibold">{person.name}</h2>
-      <p className="text-sm text-gray-500 mb-2">{person.interests}</p>
-      <div className="text-sm">
-        <strong>Dates I need a present:</strong>
-        {person.datesINeedAPresent && person.datesINeedAPresent.length > 0 ? (
-          <ul className="list-disc list-inside">
-            {person.datesINeedAPresent.map((x, i) => (
-              <li key={i}>{`${x.day}/${x.month + 1}`}</li>
-            ))}
-          </ul>
-        ) : (
-          <span> None</span>
-        )}
-        <p><strong>Previous presents:</strong> {person.previousPresents}</p>
-        <p><strong>Age:</strong> {person.age}</p>
+      <h2 className="text-xl font-semibold mb-1">{person.name}</h2>
+      <div className="flex flex-wrap gap-1 mb-2">
+        {person.interests && person.interests.split(",").filter(t => t.trim()).map((tag, i) => (
+          <span key={tag.trim() + i} className="bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full text-xs">{tag.trim()}</span>
+        ))}
+        {/* Fix: Always check for brands, even if empty string, and filter out empty values */}
+        {person.brands && person.brands.split(",").filter(b => b.trim()).length > 0 &&
+          person.brands.split(",").filter(b => b.trim()).map((brand, i) => (
+            <span key={brand.trim() + i} className="bg-green-200 text-green-800 px-2 py-0.5 rounded-full text-xs">{brand.trim()}</span>
+          ))}
+      </div>
+      <div className="text-sm text-gray-700 w-full">
         <p><strong>Gender:</strong> {person.gender ? (person.gender.charAt(0).toUpperCase() + person.gender.slice(1)) : "Unknown"}</p>
+        <p><strong>Age:</strong> {person.age || "-"}</p>
         <p><strong>Budget:</strong> ${person.budgetMin} - ${person.budgetMax}</p>
+        <p><strong>Previous presents:</strong> {person.previousPresents || "-"}</p>
+        <p><strong>Dates I need a present:</strong> {person.datesINeedAPresent && person.datesINeedAPresent.length > 0 ? (
+          person.datesINeedAPresent.map(x => `${x.day}/${x.month + 1}`).join(", ")
+        ) : "None"}</p>
       </div>
       <button
         className="mt-4 bg-orange-700 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
