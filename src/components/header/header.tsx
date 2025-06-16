@@ -10,7 +10,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-gradient-to-r from-orange-100 via-white to-amber-100 text-neutral-900 px-8 py-5 flex justify-between items-center shadow-xl border-b border-orange-100/40">
+    <header className="w-full text-neutral-900 px-8 py-5 flex justify-between items-center shadow-xl border-b border-orange-100/40">
       <Link to="/" className="text-2xl font-extrabold flex items-center gap-4 tracking-tight font-poppins group">
         <span className="transition-colors group-hover:text-orange-500">The Forgettening</span>
         <img
