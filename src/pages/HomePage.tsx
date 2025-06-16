@@ -24,10 +24,10 @@ const HomePage = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center gap-y-12 px-4 py-8">
-      <section className="max-w rounded-lg p-6 text-neutral-900 mx-auto text-center">
-        <h1 className="text-5xl font-semibold text-cyan-800 mb-4 tracking-tight font-poppins">Add Some People You Need To Remember</h1>
-        <p className="mb-4 text-neutral-700 font-semibold">Current User: {user?.email || "None"}</p>
+    <div className="flex flex-col gap-y-12 px-4 py-8">
+      <section className="max-w rounded-lg p-6 text-neutral-900">
+        <h1 className="text-5xl font-semibold text-cyan-800 mb-4 tracking-tight font-poppins">don't forget your people.</h1>
+        {/* <p className="mb-4 text-neutral-700 font-semibold">Current User: {user?.email || "None"}</p> */}
       </section>
       {user && (
         <div className="w-full flex flex-wrap justify-center gap-6 px-4">

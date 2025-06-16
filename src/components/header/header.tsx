@@ -35,32 +35,55 @@ const Header = () => {
           menuOpen ? "flex" : "hidden"
         } absolute top-16 left-0 w-full flex-col items-center gap-4 py-4 md:static md:flex md:flex-row md:gap-4 md:w-auto md:py-0`}
       >
-        <Link
+        {/* <Link
           to="/protected"
           className="bg-orange-300 hover:bg-neutral-200 text-gray-100 font-bold py-2 px-4 rounded text-center"
           onClick={() => setMenuOpen(false)}
         >
           Protected Page
-        </Link>
+        </Link> */}
         {user ? (
-          <button
-            onClick={() => {
-              FirebaseAuth.signOut();
-              setMenuOpen(false);
-            }}
-            className="bg-neutral-900 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded cursor-pointer"
-          >
-            Sign Out
-          </button>
-        ) : (
-          <Link
-            to="/auth/sign-in"
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded text-center"
-            onClick={() => setMenuOpen(false)}
-          >
-            Sign In
-          </Link>
-        )}
+  <>
+    {/* Desktop user info and sign out (inline) */}
+    <div className="hidden md:flex items-center gap-4">
+      <p className="text-sm text-neutral-700 font-semibold">
+        {user.email}
+      </p>
+      <button
+        onClick={() => {
+          FirebaseAuth.signOut();
+        }}
+        className="bg-neutral-900 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded cursor-pointer"
+      >
+        Sign Out
+      </button>
+    </div>
+
+    {/* Mobile user info and sign out (inside menu) */}
+    <div className="flex flex-col items-center gap-2 md:hidden">
+      <p className="text-sm text-neutral-700 font-semibold">
+        {user.email}
+      </p>
+      <button
+        onClick={() => {
+          FirebaseAuth.signOut();
+          setMenuOpen(false);
+        }}
+        className="bg-neutral-900 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded cursor-pointer"
+      >
+        Sign Out
+      </button>
+    </div>
+  </>
+) : (
+  <Link
+    to="/auth/sign-in"
+    className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded text-center"
+    onClick={() => setMenuOpen(false)}
+  >
+    Sign In
+  </Link>
+)}
       </div>
     </header>
   );
