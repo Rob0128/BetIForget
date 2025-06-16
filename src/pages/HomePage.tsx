@@ -24,15 +24,25 @@ const HomePage = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col gap-y-12 px-4 py-8">
-      <section className="max-w rounded-lg p-6 text-neutral-900">
-        <h1 className="text-5xl font-semibold text-cyan-800 mb-4 tracking-tight font-poppins">don't forget your people.</h1>
-        {/* <p className="mb-4 text-neutral-700 font-semibold">Current User: {user?.email || "None"}</p> */}
+    <div className="flex flex-col gap-y-6 px-4 py-8">
+      <section className="max-w rounded-lg p-6 text-neutral-900 flex flex-col items-center">
+        <h1 className="text-5xl font-semibold text-orange-700 mb-2 tracking-tight font-poppins">
+          don't forget your people.
+        </h1>
+        <p className="text-lg text-neutral-500 font-medium mb-2">
+          Keep track of everyone you care about and never miss a special date
+          again.
+        </p>
+        <div className="h-1 w-24 bg-gradient-to-r from-orange-400 via-amber-400 to-orange-300 rounded-full mb-2"></div>
       </section>
       {user && (
         <div className="w-full flex flex-wrap justify-center gap-6 px-4">
           <AddPersonCard onPersonAdded={refreshPeople} />
-          <DisplayPeople people={people} loadingPeople={loadingPeople} onPersonDeleted={refreshPeople} />
+          <DisplayPeople
+            people={people}
+            loadingPeople={loadingPeople}
+            onPersonDeleted={refreshPeople}
+          />
         </div>
       )}
     </div>

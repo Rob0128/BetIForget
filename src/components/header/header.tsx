@@ -23,7 +23,7 @@ const Header = () => {
       {/* Hamburger Button */}
       <button
         onClick={() => setMenuOpen(!menuOpen)}
-        className="md:hidden p-2 rounded-full border border-orange-200 bg-white shadow hover:bg-orange-100 transition"
+        className="md:hidden p-2 rounded-full border border-orange-200 bg-white shadow hover:bg-orange-100 transition z-50"
         aria-label="Toggle menu"
       >
         {menuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -54,21 +54,23 @@ const Header = () => {
             </div>
 
             {/* Mobile user info and sign out (inside menu) */}
-            <div className="flex flex-col items-center gap-3 md:hidden bg-orange-50 px-4 py-3 rounded-xl shadow border border-orange-100 w-11/12 mx-auto">
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                <span className="text-sm text-neutral-700 font-semibold">{user.email}</span>
-              </span>
-              <button
-                onClick={() => {
-                  FirebaseAuth.signOut();
-                  setMenuOpen(false);
-                }}
-                className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-5 rounded-lg shadow transition"
-              >
-                Sign Out
-              </button>
-            </div>
+            {menuOpen && (
+              <div className="flex flex-col items-center gap-3 md:hidden bg-orange-50 px-4 py-3 rounded-xl shadow border border-orange-100 w-11/12 mx-auto">
+                <span className="flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  <span className="text-sm text-neutral-700 font-semibold">{user.email}</span>
+                </span>
+                <button
+                  onClick={() => {
+                    FirebaseAuth.signOut();
+                    setMenuOpen(false);
+                  }}
+                  className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-5 rounded-lg shadow transition"
+                >
+                  Sign Out
+                </button>
+              </div>
+            )}
           </>
         ) : (
           <Link

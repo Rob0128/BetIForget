@@ -14,17 +14,16 @@ const DisplayPeople = ({
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
 
   return (
-    <div className="w-full flex flex-wrap justify-center gap-6 px-4">
+    <div className="w-full max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 bg-gradient-to-br from-orange-50 via-white to-amber-50 rounded-3xl shadow-2xl border border-orange-100/30 mt-12">
       {loadingPeople ? (
         <div>Loading people...</div>
       ) : (
         people.map((person, idx) => (
           <div
             key={person.userId + person.name + idx}
-            className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 flex justify-center"
+            className="flex justify-center"
           >
-            {/* Only render PersonCard, let it handle all layout and fields */}
-            <div className="w-full" onClick={() => setSelectedPerson(person)} style={{ cursor: "pointer" }}>
+            <div className="w-full max-w-sm" onClick={() => setSelectedPerson(person)} style={{ cursor: "pointer" }}>
               <PersonCard person={person} onPersonDeleted={onPersonDeleted} />
             </div>
           </div>
