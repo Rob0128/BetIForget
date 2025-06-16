@@ -3,20 +3,20 @@ import { Link } from "react-router-dom";
 import { useUser } from "../../context/AuthContext";
 import { FirebaseAuth } from "../../firebase";
 import { Menu, X } from "lucide-react";
-import clockLogoImg from '../../assets/clocklogo.png'; 
+import clockLogoImg from '../../assets/present.png'; 
 
 const Header = () => {
   const { user } = useUser();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="w-full text-neutral-900 px-8 py-5 flex justify-between items-center shadow-xl border-b border-orange-100/40">
-      <Link to="/" className="text-2xl font-extrabold flex items-center gap-4 tracking-tight font-poppins group">
-        <span className="transition-colors group-hover:text-orange-500">The Forgettening</span>
+    <header className="w-full text-orange-300 px-8 py-5 flex justify-between items-center shadow-xl border-b border-orange-100/40">
+      <Link to="/" className="text-2xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group">
+        <span className="transition-colors group-hover:text-neutral-600">The Forgettening</span>
         <img
           src={clockLogoImg}
           alt="present"
-          className="w-14 h-14 rounded-full align-middle shadow-lg border-2 border-orange-200 group-hover:scale-105 transition-transform"
+          className="w-14 h-14 rounded-full align-middle group-hover:scale-105 transition-transform"
         />
       </Link>
 
