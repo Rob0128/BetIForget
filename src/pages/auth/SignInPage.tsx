@@ -41,30 +41,43 @@ const SignInPage = () => {
     setStatus("");
   };
   return (
-    <main>
-      <Link className="home-link" to="/">
-        ◄ Home
-      </Link>
-      <form className="main-container" onSubmit={handleSubmit}>
-        <h1 className="header-text">Sign In</h1>
-        <input
-          name="email"
-          onChange={handleInputChange}
-          type="email"
-          placeholder="Email"
-        />
-        <input
-          name="password"
-          onChange={handleInputChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button type="submit">Login</button>
-        <Link className="auth-link" to="/auth/sign-up">
+    <main className="min-h-screen flex flex-col items-center justify-start bg-white/20 px-2 pt-10 pb-8">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center border border-orange-100 mt-8">
+        <Link className="self-start text-orange-400 hover:text-orange-600 font-semibold mb-4 transition" to="/">
+          ◄ Home
+        </Link>
+        <h1 className="text-3xl font-extrabold text-orange-500 mb-2 font-poppins">Sign In</h1>
+        <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
+          <input
+            name="email"
+            onChange={handleInputChange}
+            type="email"
+            placeholder="Email"
+            className="border border-orange-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 text-base bg-orange-50 placeholder:text-orange-300"
+            autoComplete="email"
+            required
+          />
+          <input
+            name="password"
+            onChange={handleInputChange}
+            type="password"
+            placeholder="Password"
+            className="border border-orange-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 text-base bg-orange-50 placeholder:text-orange-300"
+            autoComplete="current-password"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow transition text-lg mt-2"
+          >
+            Login
+          </button>
+        </form>
+        <Link className="mt-4 text-orange-500 hover:text-orange-700 font-semibold transition" to="/auth/sign-up">
           Don't have an account? Sign Up
         </Link>
-        {status && <p>{status}</p>}
-      </form>
+        {status && <p className="mt-4 text-sm text-orange-600">{status}</p>}
+      </div>
     </main>
   );
 };
