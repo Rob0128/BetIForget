@@ -42,6 +42,55 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      {/* Onboarding instruction below header/add button if no people */}
+      {user && !loadingPeople && people.length === 0 && (
+        <div className="w-full flex flex-col items-center justify-center">
+          {/* Mobile: straight up arrow above text, not cut off */}
+          <div className="flex flex-col items-center justify-center sm:hidden">
+            <svg
+              width="44"
+              height="87"
+              viewBox="0 0 54 64"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="mb-1"
+              style={{ display: 'block', margin: '0 auto' }}
+            >
+              <path d="M22 58 V10" stroke="#fb923c" strokeWidth="6" fill="none" markerEnd="url(#arrowheadMobile)" />
+              <defs>
+                <marker id="arrowheadMobile" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="strokeWidth">
+                  <path d="M2,2 L10,6 L2,10 L6,6 L2,2" fill="#fb923c" />
+                </marker>
+              </defs>
+            </svg>
+            <span className="text-orange-700 font-bold text-lg bg-white/90 px-5 py-2 rounded-2xl shadow border border-orange-200" style={{ maxWidth: '320px' }}>
+              start by adding your first person
+            </span>
+          </div>
+          {/* Desktop: text then arrow to the right, no space between */}
+          <div className="hidden sm:flex flex-row items-center justify-center gap-0 ml-32">
+            <span className="text-orange-700 font-bold text-lg bg-white/90 px-5 py-2 rounded-2xl shadow border border-orange-200" style={{ maxWidth: '320px' }}>
+              start by adding your first person
+            </span>
+            <svg
+              width="100"
+              height="70"
+              viewBox="0 0 100 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="-mt-4"
+              style={{ transform: 'rotate(180deg)' }}
+            >
+              <path d="M95 35 Q60 10 10 60" stroke="#fb923c" strokeWidth="7" fill="none" markerEnd="url(#arrowhead)" />
+              <defs>
+                <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="strokeWidth">
+                  <path d="M2,2 L10,6 L2,10 L6,6 L2,2" fill="#fb923c" />
+                </marker>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      )}
       {user && (
         <div className="w-full overflow-x-hidden">
           <DisplayPeople
