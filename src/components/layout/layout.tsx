@@ -1,20 +1,33 @@
 import React from "react";
 import Footer from "../footer/footer";
-import Header from "../header/header";
 import bg from "../../assets/backg.png";
 import { useUser } from "../../context/AuthContext";
 // Example icons from Lucide (install with: npm install lucide-react)
-import { Settings } from "lucide-react";
+import { Settings, Menu, X } from "lucide-react";
 import presentImg from '../../assets/present.png';
 import clockLogoImg from '../../assets/clocklogo.png';
 import backg7Img from '../../assets/backg7.png';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useUser();
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
+  // Close menu when clicking outside
+  React.useEffect(() => {
+    if (!menuOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      const dropdown = document.getElementById('mobile-burger-dropdown');
+      if (dropdown && !dropdown.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [menuOpen]);
 
   return (
     <div>
-      <Header />
+      {/* Header removed. Move header content into the main layout */}
       <div
         className="relative flex flex-col min-h-screen text-white bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${bg})` }}
@@ -69,8 +82,87 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </aside>
           )}
           {/* Main Content */}
-          <main className="flex-grow flex justify-center items-start">
-            <div className="w-full mx-auto px-4 py-12">{children}</div>
+          <main className="flex-grow flex flex-col items-center justify-start w-full">
+            {/* Responsive merged header content */}
+            <div className="w-full flex flex-col md:flex-row items-center md:justify-between justify-center px-4 sm:px-6 pt-6 pb-4 gap-4 relative">
+              <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
+                <a href="/" className="text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400 hover:text-orange-600 transition">
+                  <span className="transition-colors group-hover:text-neutral-600 whitespace-nowrap">The Forgettening</span>
+                  <img
+                    src={presentImg}
+                    alt="present"
+                    className="w-10 h-10 sm:w-14 sm:h-14 rounded-full align-middle group-hover:scale-105 transition-transform"
+                  />
+                </a>
+              </div>
+              {/* User info and sign out button (if logged in) */}
+              {user ? (
+                <>
+                  {/* Desktop: show inline */}
+                  <div className="hidden md:flex items-center gap-4 bg-orange-50 px-4 py-2 rounded-xl shadow border border-orange-100 w-full md:w-auto justify-center md:justify-end">
+                    <span className="flex items-center gap-2">
+                      <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                      <span className="text-xs sm:text-sm text-neutral-700 font-semibold truncate max-w-[120px] sm:max-w-none">{user.email}</span>
+                    </span>
+                    <button
+                      onClick={() => {
+                        import('../../firebase').then(({ FirebaseAuth }) => FirebaseAuth.signOut());
+                      }}
+                      className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-5 rounded-lg shadow transition text-xs sm:text-base"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                  {/* Mobile: burger menu */}
+                  <div className="flex md:hidden items-center w-full justify-end relative z-50">
+                    <button
+                      onClick={() => setMenuOpen(!menuOpen)}
+                      className="p-2 rounded-full border border-orange-200 bg-white shadow hover:bg-orange-100 transition"
+                      aria-label="Toggle menu"
+                    >
+                      {menuOpen ? <X size={28} /> : <Menu size={28} />}
+                    </button>
+                    {/* Dropdown menu and backdrop */}
+                    {menuOpen && (
+                      <>
+                        {/* Backdrop */}
+                        <div className="fixed inset-0 bg-black/20 z-40" onClick={() => setMenuOpen(false)}></div>
+                        <div
+                          id="mobile-burger-dropdown"
+                          className="absolute top-14 right-0 w-60 bg-white rounded-xl shadow-2xl border border-orange-100 flex flex-col items-center py-5 z-50 animate-fade-in"
+                        >
+                          <span className="flex items-center gap-2 mb-4">
+                            <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                            <span className="text-sm text-neutral-700 font-semibold truncate max-w-[120px]">{user.email}</span>
+                          </span>
+                          <button
+                            onClick={() => {
+                              import('../../firebase').then(({ FirebaseAuth }) => FirebaseAuth.signOut());
+                              setMenuOpen(false);
+                            }}
+                            className="w-5/6 bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-4 rounded-lg shadow transition text-base"
+                          >
+                            Sign Out
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </>
+              ) : (
+                // Show Sign In button if not logged in
+                <div className="flex items-center w-full justify-end">
+                  <a
+                    href="/auth/sign-in"
+                    className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow transition text-center text-xs sm:text-base"
+                  >
+                    Sign In
+                  </a>
+                </div>
+              )}
+            </div>
+            {/* Main page content */}
+            <div className="w-full mx-auto px-2 sm:px-4 py-8 sm:py-12">{children}</div>
           </main>
         </div>
         <Footer />
