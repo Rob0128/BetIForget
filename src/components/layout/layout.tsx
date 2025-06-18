@@ -94,6 +94,26 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className="w-10 h-10 sm:w-14 sm:h-14 rounded-full align-middle group-hover:scale-105 transition-transform"
                   />
                 </a>
+                {/* Mobile burger menu: classic hamburger icon, aligned with logo/title */}
+                <div className="flex md:hidden items-center ml-auto">
+                  <button
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    className="p-2 rounded-full border border-orange-200 bg-white shadow hover:bg-orange-100 transition flex items-center justify-center"
+                    aria-label="Toggle menu"
+                    style={{ height: '44px', width: '44px', marginLeft: '8px' }}
+                  >
+                    {/* Hamburger icon (classic three lines) */}
+                    {!menuOpen ? (
+                      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect y="6" width="28" height="3" rx="1.5" fill="#fb923c" />
+                        <rect y="13" width="28" height="3" rx="1.5" fill="#fb923c" />
+                        <rect y="20" width="28" height="3" rx="1.5" fill="#fb923c" />
+                      </svg>
+                    ) : (
+                      <X size={28} color="#fb923c" />
+                    )}
+                  </button>
+                </div>
               </div>
               {/* User info and sign out button (if logged in) */}
               {user ? (
@@ -115,13 +135,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   </div>
                   {/* Mobile: burger menu */}
                   <div className="flex md:hidden items-center w-full justify-end relative z-50">
-                    <button
-                      onClick={() => setMenuOpen(!menuOpen)}
-                      className="p-2 rounded-full border border-orange-200 bg-white shadow hover:bg-orange-100 transition"
-                      aria-label="Toggle menu"
-                    >
-                      {menuOpen ? <X size={28} /> : <Menu size={28} />}
-                    </button>
+                    
                     {/* Dropdown menu and backdrop */}
                     {menuOpen && (
                       <>
