@@ -34,9 +34,6 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
   const [brandInput, setBrandInput] = useState("");
   const [allBrands, setAllBrands] = useState<string[]>(dedupeCaseInsensitive(DEFAULT_BRANDS));
 
-  if (isLoading) return <div>Loading...</div>;
-  if (!user) return <div>Please log in</div>;
-
   // Load tags and brands from Firestore on mount
   useEffect(() => {
     getAllTags().then(tags => {
@@ -232,6 +229,11 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       console.error("Add person failed:", error);
     }
   };
+
+  // Instead of early return, use conditional rendering in the return statement
+  if (isLoading || !user) {
+    return <div>{isLoading ? "Loading..." : "Please log in"}</div>;
+  }
 
   return (
     <>

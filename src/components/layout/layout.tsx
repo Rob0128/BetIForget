@@ -29,6 +29,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <div className="flex flex-col items-center py-8 border-b border-white/20">
                 <span className="text-2xl font-extrabold tracking-tight text-white font-poppins">Forgettory</span>
                 <div className="mt-2 h-1 w-10 bg-white/60 rounded"></div>
+                {/* Submenu buttons */}
+                <div className="flex gap-2 mt-6">
+                  <a href="/" className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-sm shadow transition">Home</a>
+                  <a href="/protected" className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-sm shadow transition">Protected</a>
+                </div>
               </div>
               <div className="flex-1 flex flex-col items-center justify-start px-6 py-8">
                 <div className="w-full flex flex-col items-center gap-6">
