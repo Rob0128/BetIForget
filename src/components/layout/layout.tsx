@@ -5,6 +5,9 @@ import bg from "../../assets/backg.png";
 import { useUser } from "../../context/AuthContext";
 // Example icons from Lucide (install with: npm install lucide-react)
 import { Settings } from "lucide-react";
+import presentImg from '../../assets/present.png';
+import clockLogoImg from '../../assets/clocklogo.png';
+import backg7Img from '../../assets/backg7.png';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useUser();
@@ -30,12 +33,19 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <div className="flex-1 flex flex-col items-center justify-start px-6 py-8">
                 <div className="w-full flex flex-col items-center gap-6">
                   <div className="bg-white/10 rounded-xl p-4 w-full flex flex-col items-center shadow-sm">
+                    <img src={presentImg} alt="Gift" className="w-16 h-16 mb-2 drop-shadow-lg" />
                     <span className="text-lg font-semibold text-white/90 mb-2">Welcome!</span>
                     <span className="text-sm text-white/70 text-center">Manage your people, gifts, and special dates all in one place. Use the settings below to customize your experience.</span>
                   </div>
                   <div className="bg-white/10 rounded-xl p-4 w-full flex flex-col items-center shadow-sm">
+                    <img src={clockLogoImg} alt="Birthday Reminder" className="w-14 h-14 mb-2 drop-shadow-md" />
                     <span className="text-base font-semibold text-white/90 mb-1">Pro Tip</span>
                     <span className="text-xs text-white/60 text-center">Click on a person to view or edit their details. Add new people with the button on the main page!</span>
+                  </div>
+                  <div className="bg-white/10 rounded-xl p-4 w-full flex flex-col items-center shadow-sm">
+                    <img src={backg7Img} alt="Friends and Family" className="w-20 h-14 object-cover rounded mb-2" />
+                    <span className="text-base font-semibold text-white/90 mb-1">Never Miss a Date</span>
+                    <span className="text-xs text-white/60 text-center">Get reminded of birthdays, anniversaries, and special occasions for your friends and loved ones.</span>
                   </div>
                   <nav className="w-full flex flex-col items-center mt-2">
                     <a
