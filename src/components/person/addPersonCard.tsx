@@ -260,21 +260,22 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       {/* Modal */}
       {showPopup && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black/75 bg-opacity-40 z-50"
+          className="fixed inset-0 flex items-center justify-center bg-black/60 z-50"
           onClick={() => setShowPopup(false)}
         >
           <div
-            className="max-w-sm w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6 text-gray-900 relative"
+            className="max-w-md w-full mx-auto bg-white rounded-2xl shadow-2xl border border-orange-200 flex flex-col items-center p-8 text-gray-900 relative animate-fadeIn"
             onClick={e => e.stopPropagation()}
           >
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 text-orange-400 hover:text-orange-600 text-2xl font-bold bg-orange-50 rounded-full w-9 h-9 flex items-center justify-center shadow border border-orange-100 transition"
               onClick={() => setShowPopup(false)}
+              aria-label="Close"
             >
               ×
             </button>
-            <h3 className="text-lg font-bold mb-4">New Person</h3>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full"> 
+            <h3 className="text-2xl font-extrabold mb-4 text-orange-500">New Person</h3>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
               <input
                 type="text"
                 placeholder="Name"
@@ -475,7 +476,7 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
               {error && <div className="text-red-500">{error}</div>}
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-2"
+                className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow transition text-lg mt-2"
               >
                 Save Person
               </button>

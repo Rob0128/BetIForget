@@ -33,11 +33,11 @@ const DisplayPeople = ({
       {/* Modal for selected person */}
       {selectedPerson && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
           onClick={() => setSelectedPerson(null)}
         >
           <div
-            className="bg-white rounded-2xl shadow-lg p-8 max-w-lg w-full relative text-gray-900"
+            className="bg-white rounded-2xl shadow-2xl border border-orange-200 p-8 max-w-lg w-full relative text-gray-900 animate-fadeIn"
             onClick={e => e.stopPropagation()}
           >
             <PersonCard
@@ -49,8 +49,9 @@ const DisplayPeople = ({
               isModal={true}
             />
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl"
+              className="absolute top-3 right-3 text-orange-400 hover:text-orange-600 text-2xl font-bold bg-orange-50 rounded-full w-9 h-9 flex items-center justify-center shadow border border-orange-100 transition"
               onClick={() => setSelectedPerson(null)}
+              aria-label="Close"
             >
               ×
             </button>

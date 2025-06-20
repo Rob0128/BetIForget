@@ -65,20 +65,20 @@ const PersonCard = ({
         Delete
       </button>
       {showConfirm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-          <div className="bg-white rounded-lg p-6 shadow-lg w-full max-w-xs relative">
-            <p className="mb-4">Are you sure you want to delete <strong>{person.name}</strong>?</p>
+        <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+          <div className="bg-white rounded-2xl p-8 shadow-2xl border border-orange-200 w-full max-w-xs relative animate-fadeIn">
+            <p className="mb-4 text-gray-900 text-base font-semibold">Are you sure you want to delete <strong>{person.name}</strong>?</p>
             {error && <div className="text-red-500 mb-2">{error}</div>}
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-2 mt-4">
               <button
-                className="px-4 py-2 rounded bg-gray-300"
+                className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition"
                 onClick={() => setShowConfirm(false)}
                 disabled={deleting}
               >
                 Cancel
               </button>
               <button
-                className="px-4 py-2 rounded bg-red-500 text-white"
+                className="px-4 py-2 rounded-lg bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold shadow transition"
                 onClick={handleDelete}
                 disabled={deleting}
               >
