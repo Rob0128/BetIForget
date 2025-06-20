@@ -5,6 +5,7 @@ import { useUser } from "../../context/AuthContext";
 // Example icons from Lucide (install with: npm install lucide-react)
 import { Settings, Menu, X } from "lucide-react";
 import presentImg from '../../assets/present.png';
+import presentImg2 from '../../assets/present2.png';
 import clockLogoImg from '../../assets/clocklogo.png';
 import backg7Img from '../../assets/backg7.png';
 
@@ -85,15 +86,15 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <main className="flex-grow flex flex-col items-center justify-start w-full">
             {/* Responsive merged header content */}
             <div className="w-full flex flex-col md:flex-row items-center md:justify-between justify-center px-4 sm:px-6 pt-6 pb-4 gap-4 relative">
-              <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
-                <a href="/" className="text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400 hover:text-orange-600 transition">
-                  <span className="transition-colors group-hover:text-neutral-600 whitespace-nowrap">The Forgettening</span>
+              <div className="flex items-center w-full md:w-auto justify-center md:justify-start">
+                {/* <a href="/" className="text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400 hover:text-orange-600 transition"> */}
                   <img
-                    src={presentImg}
+                    src={presentImg2}
                     alt="present"
                     className="w-10 h-10 sm:w-14 sm:h-14 rounded-full align-middle group-hover:scale-105 transition-transform"
                   />
-                </a>
+                  <span className="transition-colors group-hover:text-neutral-600 whitespace-nowrap text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400">The Forgettening</span>
+                {/* </a> */}
                 {/* Mobile burger menu: classic hamburger icon, aligned with logo/title */}
                 <div className="flex md:hidden items-center ml-auto">
                   <button
@@ -113,36 +114,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                       <X size={28} color="#fb923c" />
                     )}
                   </button>
-                  {/* Mobile dropdown menu */}
-                  {menuOpen && (
-                    <div id="mobile-burger-dropdown" className="absolute top-16 right-4 bg-white rounded-xl shadow-lg py-4 px-6 flex flex-col gap-4 z-50 min-w-[180px] border border-orange-100">
-                      {user ? (
-                        <>
-                          <span className="flex items-center gap-2 text-neutral-700 font-semibold text-sm">
-                            <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                            {user.email}
-                          </span>
-                          <button
-                            onClick={() => {
-                              import('../../firebase').then(({ FirebaseAuth }) => FirebaseAuth.signOut());
-                              setMenuOpen(false);
-                            }}
-                            className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-5 rounded-lg shadow transition text-xs sm:text-base"
-                          >
-                            Sign Out
-                          </button>
-                        </>
-                      ) : (
-                        <a
-                          href="/auth/sign-in"
-                          className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow transition text-center text-xs sm:text-base"
-                          onClick={() => setMenuOpen(false)}
-                        >
-                          Sign In
-                        </a>
-                      )}
-                    </div>
-                  )}
                 </div>
               </div>
               {/* User info and sign out button (if logged in) */}

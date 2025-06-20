@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useUser } from "../../context/AuthContext";
 import { FirebaseAuth } from "../../firebase";
 import { Menu, X } from "lucide-react";
-import clockLogoImg from '../../assets/present.png'; 
+import clockLogoImg from '../../assets/present2.png'; 
 
 const Header = () => {
   const { user } = useUser();
@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <header className="w-full text-orange-300 px-8 py-5 flex justify-between items-center shadow-xl border-b border-orange-100/40">
       <Link to="/" className="text-2xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group">
-        <span className="transition-colors group-hover:text-neutral-600">The Forgettening</span>
+        <span className="transition-colors roup-hover:text-neutral-600">The Forgettening</span>
         <img
           src={clockLogoImg}
           alt="present"
