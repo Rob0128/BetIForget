@@ -36,19 +36,9 @@ const PersonCard = ({
       <img
         src={presentImg}
         alt={"present"}
-        className="w-24 h-24 rounded-full shadow mb-4"
+        className="w-24 h-24 rounded-full mb-4 shadow-lg object-cover bg-orange-50"
       />
-      <h2 className="text-xl font-semibold mb-1">{person.name}</h2>
-      <div className="flex flex-wrap gap-1 mb-2">
-        {person.interests && person.interests.split(",").filter(t => t.trim()).map((tag, i) => (
-          <span key={tag.trim() + i} className="bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full text-xs">{tag.trim()}</span>
-        ))}
-        {/* Fix: Always check for brands, even if empty string, and filter out empty values */}
-        {person.brands && person.brands.split(",").filter(b => b.trim()).length > 0 &&
-          person.brands.split(",").filter(b => b.trim()).map((brand, i) => (
-            <span key={brand.trim() + i} className="bg-green-200 text-green-800 px-2 py-0.5 rounded-full text-xs">{brand.trim()}</span>
-          ))}
-      </div>
+      <h3 className="text-xl font-bold mb-2 text-orange-700">{person.name}</h3>
       <div className="text-sm text-gray-700 w-full">
         <p><strong>Gender:</strong> {person.gender ? (person.gender.charAt(0).toUpperCase() + person.gender.slice(1)) : "Unknown"}</p>
         <p><strong>Age:</strong> {person.age || "-"}</p>
@@ -58,12 +48,15 @@ const PersonCard = ({
           person.datesINeedAPresent.map(x => `${x.day}/${x.month + 1}`).join(", ")
         ) : "None"}</p>
       </div>
-      <button
-        className="mt-4 bg-orange-700 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
-        onClick={() => setShowConfirm(true)}
-      >
-        Delete
-      </button>
+      {/* Only show Delete button if isModal (selected card) */}
+      {isModal && (
+        <button
+          className="mt-4 bg-orange-700 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
+          onClick={() => setShowConfirm(true)}
+        >
+          Delete
+        </button>
+      )}
       {showConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
           <div className="bg-white rounded-2xl p-8 shadow-2xl border border-orange-200 w-full max-w-xs relative animate-fadeIn">
