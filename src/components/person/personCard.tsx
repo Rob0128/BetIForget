@@ -39,14 +39,32 @@ const PersonCard = ({
         className="w-24 h-24 rounded-full mb-4 shadow-lg object-cover bg-orange-50"
       />
       <h3 className="text-xl font-bold mb-2 text-orange-700">{person.name}</h3>
-      <div className="text-sm text-gray-700 w-full">
+      <div className="text-sm text-gray-700 w-full flex flex-col gap-1">
         <p><strong>Gender:</strong> {person.gender ? (person.gender.charAt(0).toUpperCase() + person.gender.slice(1)) : "Unknown"}</p>
         <p><strong>Age:</strong> {person.age || "-"}</p>
         <p><strong>Budget:</strong> ${person.budgetMin} - ${person.budgetMax}</p>
         <p><strong>Previous presents:</strong> {person.previousPresents || "-"}</p>
-        <p><strong>Dates I need a present:</strong> {person.datesINeedAPresent && person.datesINeedAPresent.length > 0 ? (
-          person.datesINeedAPresent.map(x => `${x.day}/${x.month + 1}`).join(", ")
-        ) : "None"}</p>
+        <div><strong>Dates I need a present:</strong> {person.datesINeedAPresent && person.datesINeedAPresent.length > 0 ? (
+          <ul className="list-disc list-inside ml-4">
+            {person.datesINeedAPresent.map((x, i) => (
+              <li key={i}>{`${x.day}/${x.month + 1}`}</li>
+            ))}
+          </ul>
+        ) : "None"}</div>
+        <div><strong>Interests:</strong> {person.interests ? (
+          <div className="flex flex-wrap gap-2 mt-1">
+            {person.interests.split(", ").map((tag, idx) => (
+              <span key={tag + '-' + idx} className="bg-blue-200 text-blue-800 px-2 py-1 rounded-full text-xs">{tag}</span>
+            ))}
+          </div>
+        ) : "None"}</div>
+        <div><strong>Brands:</strong> {person.brands ? (
+          <div className="flex flex-wrap gap-2 mt-1">
+            {person.brands.split(", ").map((brand, idx) => (
+              <span key={brand + '-' + idx} className="bg-green-200 text-green-800 px-2 py-1 rounded-full text-xs">{brand}</span>
+            ))}
+          </div>
+        ) : "None"}</div>
       </div>
       {/* Only show Delete button if isModal (selected card) */}
       {isModal && (

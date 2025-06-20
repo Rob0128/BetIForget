@@ -1,6 +1,7 @@
 import { useState, Fragment } from "react";
 import { Person } from '../../firebase/models/person';
 import PersonCard from "./personCard";
+import EditPersonForm from "./editPersonForm";
 
 const DisplayPeople = ({
   people,
@@ -12,6 +13,7 @@ const DisplayPeople = ({
   onPersonDeleted: () => void;
 }) => {
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
+  const [editMode, setEditMode] = useState(false);
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
@@ -34,23 +36,41 @@ const DisplayPeople = ({
       {selectedPerson && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
-          onClick={() => setSelectedPerson(null)}
+          onClick={() => { setSelectedPerson(null); setEditMode(false); }}
         >
           <div
             className="bg-white rounded-2xl shadow-2xl border border-orange-200 p-8 max-w-lg w-full relative text-gray-900 animate-fadeIn"
             onClick={e => e.stopPropagation()}
           >
-            <PersonCard
-              person={selectedPerson}
-              onPersonDeleted={() => {
-                setSelectedPerson(null);
-                onPersonDeleted();
-              }}
-              isModal={true}
-            />
+            {editMode ? (
+              <EditPersonForm
+                person={selectedPerson}
+                onSave={() => { setEditMode(false); setSelectedPerson(null); onPersonDeleted(); }}
+                onCancel={() => setEditMode(false)}
+              />
+            ) : (
+              <>
+                <PersonCard
+                  person={selectedPerson}
+                  onPersonDeleted={() => {
+                    setSelectedPerson(null);
+                    onPersonDeleted();
+                  }}
+                  isModal={true}
+                />
+                <div className="flex gap-2 mt-4">
+                  <button
+                    className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow transition text-lg"
+                    onClick={() => setEditMode(true)}
+                  >
+                    Edit
+                  </button>
+                </div>
+              </>
+            )}
             <button
               className="absolute top-3 right-3 text-orange-400 hover:text-orange-600 text-2xl font-bold bg-orange-50 rounded-full w-9 h-9 flex items-center justify-center shadow border border-orange-100 transition"
-              onClick={() => setSelectedPerson(null)}
+              onClick={() => { setSelectedPerson(null); setEditMode(false); }}
               aria-label="Close"
             >
               ×

@@ -38,6 +38,13 @@ export const deletePerson = async (person: Person & { id?: string }) => {
   await deleteDoc(doc(FirebaseFirestore, "personCards", person.id));
 };
 
+// Update an existing PersonCard
+export const updatePerson = async (person: Person & { id?: string }) => {
+  if (!person.id) throw new Error("Missing person id");
+  const { id, ...personData } = person;
+  await setDoc(doc(FirebaseFirestore, "personCards", id), personData);
+};
+
 // Tag persistence
 const TAGS_DOC_ID = "global_interest_tags"; // changed to avoid conflict
 
