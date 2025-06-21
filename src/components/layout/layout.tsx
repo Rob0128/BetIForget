@@ -3,7 +3,7 @@ import Footer from "../footer/footer";
 import bg from "../../assets/backg.png";
 import { useUser } from "../../context/AuthContext";
 // Example icons from Lucide (install with: npm install lucide-react)
-import { Settings, Menu, X } from "lucide-react";
+import { Settings, Menu, Home, X } from "lucide-react";
 import presentImg from '../../assets/present.png';
 import presentImg2 from '../../assets/present2.png';
 import clockLogoImg from '../../assets/clocklogo.png';
@@ -45,8 +45,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <div className="mt-2 h-1 w-10 bg-white/60 rounded"></div>
                 {/* Submenu buttons */}
                 <div className="flex gap-2 mt-6">
-                  <a href="/" className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-sm shadow transition">Home</a>
-                  <a href="/settings" className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-sm shadow transition flex items-center gap-1"><Settings size={16} className="inline-block" /> Settings</a>
+                  <a href="/" className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-sm shadow transition flex items-center"><Home size={16} className="inline-block" /></a>
+                  <a href="/settings" className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-sm shadow transition flex items-center gap-1"><Settings size={16} className="inline-block" /></a>
                 </div>
               </div>
               <div className="flex-1 flex flex-col items-center justify-start px-6 py-8">
