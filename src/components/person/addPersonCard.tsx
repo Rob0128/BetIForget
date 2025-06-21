@@ -206,7 +206,7 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       budgetMax: max,
       interests: newInterests.join(", "),
       brands: newBrands.join(", "),
-      userId: user.uid
+      userId: user ? user.uid : ""
     };
     try {
       await addPerson(person);

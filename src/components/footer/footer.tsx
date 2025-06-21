@@ -9,7 +9,7 @@
 
   {/* Link container - horizontal layout */}
   <div className="mt-4 flex flex-row gap-4">
-    <a
+    {/* <a
       href="/privacy"
       className="bg-orange-500 text-white px-4 py-2 rounded text-center"
     >
@@ -20,7 +20,7 @@
       className="bg-orange-500 text-white px-4 py-2 rounded text-center"
     >
       Terms of Service
-    </a>
+    </a> */}
   </div>
 </footer>
 
