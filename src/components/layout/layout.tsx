@@ -46,7 +46,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 {/* Submenu buttons */}
                 <div className="flex gap-2 mt-6">
                   <a href="/" className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-sm shadow transition">Home</a>
-                  <a href="/protected" className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-sm shadow transition">Protected</a>
+                  <a href="/settings" className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-sm shadow transition flex items-center gap-1"><Settings size={16} className="inline-block" /> Settings</a>
                 </div>
               </div>
               <div className="flex-1 flex flex-col items-center justify-start px-6 py-8">
@@ -87,14 +87,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             {/* Responsive merged header content */}
             <div className="w-full flex flex-col md:flex-row items-center md:justify-between justify-center px-4 sm:px-6 pt-6 pb-4 gap-4 relative">
               <div className="flex items-center w-full md:w-auto justify-center md:justify-start">
-                {/* <a href="/" className="text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400 hover:text-orange-600 transition"> */}
+                <a href="/" className="text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400 hover:text-orange-600 transition">
                   <img
                     src={presentImg2}
                     alt="present"
                     className="w-10 h-10 sm:w-14 sm:h-14 rounded-full align-middle group-hover:scale-105 transition-transform"
                   />
-                  <span className="transition-colors group-hover:text-neutral-600 whitespace-nowrap text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400">The Forgettening</span>
-                {/* </a> */}
+                  <span className="transition-colors whitespace-nowrap text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400">The Forgettening</span>
+                </a>
                 {/* Mobile burger menu: classic hamburger icon, aligned with logo/title */}
                 <div className="flex md:hidden items-center ml-auto">
                   <button
@@ -123,6 +123,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                             {user.email}
                           </span>
+                          <a href="/settings" className="bg-white border border-orange-200 text-orange-500 font-bold py-2 px-6 rounded-lg shadow transition text-center text-xs sm:text-base flex items-center gap-1"><Settings size={16} className="inline-block" /> Settings</a>
                           <button
                             onClick={() => {
                               import('../../firebase').then(({ FirebaseAuth }) => FirebaseAuth.signOut());

@@ -11,12 +11,12 @@ const Header = () => {
 
   return (
     <header className="w-full text-orange-300 px-8 py-5 flex justify-between items-center shadow-xl border-b border-orange-100/40">
-      <Link to="/" className="text-2xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group">
-        <span className="transition-colors roup-hover:text-neutral-600">The Forgettening</span>
+      <Link to="/" className="text-2xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group select-none focus:outline-none" tabIndex={0}>
+        <span className="transition-colors">The Forgettening</span>
         <img
           src={clockLogoImg}
           alt="present"
-          className="w-14 h-14 rounded-full align-middle group-hover:scale-105 transition-transform"
+          className="w-14 h-14 rounded-full align-middle"
         />
       </Link>
 
