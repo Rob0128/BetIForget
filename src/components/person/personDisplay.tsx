@@ -19,14 +19,14 @@ const DisplayPeople = ({
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
       {loadingPeople ? (
-        <div>Loading people...</div>
+        <div className="col-span-full flex justify-center items-center min-h-[200px] text-lg font-semibold text-gray-500">Loading people...</div>
       ) : (
         people.map((person, idx) => (
           <div
             key={person.userId + person.name + idx}
-            className="flex justify-center"
+            className="flex justify-center items-center"
           >
-            <div className="w-full max-w-sm" onClick={() => setSelectedPerson(person)} style={{ cursor: "pointer" }}>
+            <div className="w-full max-w-sm flex flex-col items-center justify-center" onClick={() => setSelectedPerson(person)} style={{ cursor: "pointer" }}>
               <PersonCard person={person} onPersonDeleted={onPersonDeleted} />
             </div>
           </div>
@@ -40,7 +40,7 @@ const DisplayPeople = ({
           onClick={() => { setSelectedPerson(null); setEditMode(false); }}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl border border-orange-200 p-8 max-w-lg w-full relative text-gray-900 animate-fadeIn"
+            className="bg-white rounded-2xl shadow-2xl border border-orange-200 p-8 max-w-lg w-full relative text-gray-900 animate-fadeIn flex flex-col items-center justify-center"
             onClick={e => e.stopPropagation()}
           >
             {editMode ? (
@@ -51,18 +51,20 @@ const DisplayPeople = ({
               />
             ) : (
               <>
-                <PersonCard
-                  person={selectedPerson}
-                  onPersonDeleted={() => {
-                    setSelectedPerson(null);
-                    setShowDeleteConfirm(false);
-                    onPersonDeleted();
-                  }}
-                  isModal={true}
-                  showDeleteConfirm={showDeleteConfirm}
-                  setShowDeleteConfirm={setShowDeleteConfirm}
-                />
-                <div className="flex gap-2 mt-4">
+                <div className="w-full flex flex-col items-center justify-center">
+                  <PersonCard
+                    person={selectedPerson}
+                    onPersonDeleted={() => {
+                      setSelectedPerson(null);
+                      setShowDeleteConfirm(false);
+                      onPersonDeleted();
+                    }}
+                    isModal={true}
+                    showDeleteConfirm={showDeleteConfirm}
+                    setShowDeleteConfirm={setShowDeleteConfirm}
+                  />
+                </div>
+                <div className="flex gap-2 mt-4 justify-center w-full">
                   <button
                     className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow transition text-lg"
                     onClick={() => setEditMode(true)}
