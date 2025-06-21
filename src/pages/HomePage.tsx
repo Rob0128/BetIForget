@@ -102,7 +102,7 @@ const HomePage = () => {
             </svg>
             <section className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-3 gap-8 px-2 sm:px-0 mt-0">
               <div className="flex flex-col items-center text-center bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-50 rounded-2xl shadow-lg p-7 border border-orange-50 relative overflow-hidden">
-                <span className="text-5xl mb-2 animate-bounce">🎁</span>
+                <span className="text-5xl mb-2">🎁</span>
                 <h3 className="text-xl font-extrabold text-orange-500 mb-2 font-poppins">
                   Never Miss a Gift
                 </h3>
@@ -116,7 +116,7 @@ const HomePage = () => {
                 </span>
               </div>
               <div className="flex flex-col items-center text-center bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-50 rounded-2xl shadow-lg p-7 border border-orange-50 relative overflow-hidden">
-                <span className="text-5xl mb-2 animate-spin-slow">⏰</span>
+                <span className="text-5xl mb-2">⏰</span>
                 <h3 className="text-xl font-extrabold text-orange-500 mb-2 font-poppins">
                   Smart Reminders
                 </h3>
@@ -129,7 +129,7 @@ const HomePage = () => {
                 </span>
               </div>
               <div className="flex flex-col items-center text-center bg-gradient-to-br from-yellow-50 via-orange-100 to-amber-100 rounded-2xl shadow-lg p-7 border border-orange-50 relative overflow-hidden">
-                <span className="text-5xl mb-2 animate-wiggle">💡</span>
+                <span className="text-5xl mb-2">💡</span>
                 <h3 className="text-xl font-extrabold text-orange-500 mb-2 font-poppins">
                   Personalized Gift Ideas
                 </h3>
