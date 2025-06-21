@@ -14,6 +14,7 @@ const DisplayPeople = ({
 }) => {
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const [editMode, setEditMode] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
@@ -54,9 +55,12 @@ const DisplayPeople = ({
                   person={selectedPerson}
                   onPersonDeleted={() => {
                     setSelectedPerson(null);
+                    setShowDeleteConfirm(false);
                     onPersonDeleted();
                   }}
                   isModal={true}
+                  showDeleteConfirm={showDeleteConfirm}
+                  setShowDeleteConfirm={setShowDeleteConfirm}
                 />
                 <div className="flex gap-2 mt-4">
                   <button
@@ -64,6 +68,12 @@ const DisplayPeople = ({
                     onClick={() => setEditMode(true)}
                   >
                     Edit
+                  </button>
+                  <button
+                    className="bg-orange-700 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg shadow transition text-lg"
+                    onClick={() => setShowDeleteConfirm(true)}
+                  >
+                    Delete
                   </button>
                 </div>
               </>

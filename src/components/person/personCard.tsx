@@ -7,10 +7,14 @@ const PersonCard = ({
   person,
   onPersonDeleted,
   isModal = false,
+  showDeleteConfirm = false,
+  setShowDeleteConfirm,
 }: {
   person: Person;
   onPersonDeleted?: () => void;
   isModal?: boolean;
+  showDeleteConfirm?: boolean;
+  setShowDeleteConfirm?: (show: boolean) => void;
 }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -30,6 +34,9 @@ const PersonCard = ({
       setDeleting(false);
     }
   };
+
+  // Use showDeleteConfirm from props if provided
+  const confirmOpen = typeof showDeleteConfirm === 'boolean' ? showDeleteConfirm : showConfirm;
 
   const content = (
     <>
@@ -66,16 +73,7 @@ const PersonCard = ({
           </div>
         ) : "None"}</div>
       </div>
-      {/* Only show Delete button if isModal (selected card) */}
-      {isModal && (
-        <button
-          className="mt-4 bg-orange-700 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
-          onClick={() => setShowConfirm(true)}
-        >
-          Delete
-        </button>
-      )}
-      {showConfirm && (
+      {confirmOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
           <div className="bg-white rounded-2xl p-8 shadow-2xl border border-orange-200 w-full max-w-xs relative animate-fadeIn">
             <p className="mb-4 text-gray-900 text-base font-semibold">Are you sure you want to delete <strong>{person.name}</strong>?</p>
@@ -83,7 +81,10 @@ const PersonCard = ({
             <div className="flex justify-end gap-2 mt-4">
               <button
                 className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition"
-                onClick={() => setShowConfirm(false)}
+                onClick={() => {
+                  setShowConfirm(false);
+                  if (setShowDeleteConfirm) setShowDeleteConfirm(false);
+                }}
                 disabled={deleting}
               >
                 Cancel

@@ -114,6 +114,36 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                       <X size={28} color="#fb923c" />
                     )}
                   </button>
+                  {/* Mobile dropdown menu */}
+                  {menuOpen && (
+                    <div id="mobile-burger-dropdown" className="absolute top-16 right-4 bg-white rounded-xl shadow-lg py-4 px-6 flex flex-col gap-4 z-50 min-w-[180px] border border-orange-100">
+                      {user ? (
+                        <>
+                          <span className="flex items-center gap-2 text-neutral-700 font-semibold text-sm">
+                            <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                            {user.email}
+                          </span>
+                          <button
+                            onClick={() => {
+                              import('../../firebase').then(({ FirebaseAuth }) => FirebaseAuth.signOut());
+                              setMenuOpen(false);
+                            }}
+                            className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-5 rounded-lg shadow transition text-xs sm:text-base"
+                          >
+                            Sign Out
+                          </button>
+                        </>
+                      ) : (
+                        <a
+                          href="/auth/sign-in"
+                          className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow transition text-center text-xs sm:text-base"
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          Sign In
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               {/* User info and sign out button (if logged in) */}
