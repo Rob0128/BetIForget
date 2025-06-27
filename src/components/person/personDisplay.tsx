@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
 import { Person } from '../../firebase/models/person';
 import PersonCard from "./personCard";
 import EditPersonForm from "./editPersonForm";

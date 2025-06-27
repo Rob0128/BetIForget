@@ -6,11 +6,6 @@ const SettingsPage = () => {
   const [email, setEmail] = useState(user?.email || "");
   const [editing, setEditing] = useState(false);
   const [status, setStatus] = useState("");
-  // Placeholder for preferences
-  const [preferences, setPreferences] = useState({
-    emailNotifications: true,
-    darkMode: false,
-  });
 
   // Placeholder for update logic
   const handleSave = async () => {
@@ -46,31 +41,6 @@ const SettingsPage = () => {
           <span className="text-base text-gray-800">{user.email}</span>
         )}
       </div>
-      {/* <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-gray-700">Preferences</label>
-        <div className="flex items-center gap-4">
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={preferences.emailNotifications}
-              onChange={e => setPreferences(p => ({ ...p, emailNotifications: e.target.checked }))}
-              className="accent-orange-500"
-              disabled={!editing}
-            />
-            <span>Email Notifications</span>
-          </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={preferences.darkMode}
-              onChange={e => setPreferences(p => ({ ...p, darkMode: e.target.checked }))}
-              className="accent-orange-500"
-              disabled={!editing}
-            />
-            <span>Dark Mode</span>
-          </label>
-        </div>
-      </div> */}
       <div className="flex gap-3 mt-4">
         {editing ? (
           <>

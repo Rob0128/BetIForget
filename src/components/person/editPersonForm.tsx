@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Person, Gender } from '../../firebase/models/person';
 import { updatePerson, getAllTags, saveTags, getAllBrands, saveBrands } from '../../firebase/services/personCardService';
-import { useUser } from "../../context/AuthContext";
 
 const EditPersonForm = ({
   person,
@@ -12,7 +11,6 @@ const EditPersonForm = ({
   onSave: () => void;
   onCancel: () => void;
 }) => {
-  const { user } = useUser();
   const [name, setName] = useState(person.name || "");
   const [interests, setInterests] = useState<string[]>(person.interests ? person.interests.split(", ") : []);
   const [interestInput, setInterestInput] = useState("");

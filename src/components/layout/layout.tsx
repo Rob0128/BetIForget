@@ -3,7 +3,7 @@ import Footer from "../footer/footer";
 import bg from "../../assets/backg.png";
 import { useUser } from "../../context/AuthContext";
 // Example icons from Lucide (install with: npm install lucide-react)
-import { Settings, Menu, Home, X } from "lucide-react";
+import { Settings, Home, X } from "lucide-react";
 import presentImg from '../../assets/present.png';
 import presentImg2 from '../../assets/present2.png';
 import clockLogoImg from '../../assets/clocklogo.png';
