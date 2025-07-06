@@ -4,6 +4,8 @@ import { Link, Navigate } from "react-router-dom";
 import { FirebaseAuth } from "../../firebase";
 import { FirebaseError } from "firebase/app";
 import { useUser } from "../../context/AuthContext";
+//import { getFunctions, httpsCallable } from "firebase/functions";
+
 
 const SignUpPage = () => {
   // ==============================
@@ -34,6 +36,26 @@ const SignUpPage = () => {
         formValues.email,
         formValues.password
       );
+      console.log("[SignUp] Firebase user created, calling sendwelcomemail1 via httpsCallable...");
+    //   const functions = getFunctions();
+      
+    // const sendwelcomemail1 = httpsCallable(functions, "sendwelcomemail1");
+    //   let result;
+      try {
+        // result = await sendwelcomemail1({ email: formValues.email });
+        console.log("email is:", formValues.email);
+        const response = await fetch("https://us-central1-the-forgettory.cloudfunctions.net/helloWorld", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: formValues.email }),
+        });
+        const data = await response.text();
+        alert(`Response from Cloud Function: ${data}`);
+        //alert(`Response from Cloud Function: ${data}`);
+
+      } catch (err) {
+        console.error("[SignUp] Error calling sendwelcomemail1 via httpsCallable:", err);
+      }
     } catch (e) {
       const error = e as FirebaseError;
       alert(error.message);
