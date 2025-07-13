@@ -10,6 +10,7 @@ export interface Person {
   budgetMax: number;
   interests: string;
   userId: string;
+  email?: string;
   id?: string;
   brands?: string;
 }
