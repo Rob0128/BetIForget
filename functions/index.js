@@ -57,7 +57,7 @@ exports.helloWorld = onRequest(
 
 exports.checkDatesAndSendEmailsDaily = onSchedule(
   {
-    schedule: "every day 21:22", // Runs every day at 10pm UTC
+    schedule: "every day 21:22", // Runs every day at 9:22pm UTC
     timeZone: "Etc/UTC",
     secrets: ["POSTMARK_API_KEY"],
   },
@@ -102,6 +102,144 @@ exports.checkDatesAndSendEmailsDaily = onSchedule(
     }
   }
 );
+
+exports.generateGifts = onSchedule(
+  {
+    schedule: "every day 20:22",
+    timeZone: "Etc/UTC",
+    secrets: ["POSTMARK_API_KEY"],
+  },
+  async (event) => {
+    const db = getFirestore();
+    const postmarkClient = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
+
+    try {
+      const snapshot = await db.collection("personCards").get();
+      const now = new Date();
+      const soon = new Date(now);
+      soon.setDate(now.getDate() + 8);
+
+      let emailsSent = 0;
+
+      for (const doc of snapshot.docs) {
+        const data = doc.data();
+        if (!data.datesINeedAPresent || !Array.isArray(data.datesINeedAPresent)) continue;
+
+        for (const dateObj of data.datesINeedAPresent) {
+          // JS Date months are 0-based, so subtract 1 from month if your data is 1-based
+          const date = new Date(now.getFullYear(), dateObj.month - 1, dateObj.day);
+          if (date >= now && date <= soon && data.userId && data.name) {
+            const toEmail = "robertjohnhill1@gmail.com";
+            // get suggestions links here
+            // check the links
+            // save the links to DB
+            // send them to me to check
+            if (toEmail) {
+              await postmarkClient.sendEmail({
+                From: "info@neverlateclub.com",
+                To: toEmail,
+                Subject: `Upcoming date for ${data.name}`,
+                TextBody: `You have an upcoming important date for ${data.name} on ${date.toDateString()}.`,
+                MessageStream: "outbound"
+              });
+              emailsSent++;
+            }
+          }
+      }
+      }
+
+      console.log(`Scheduled email check complete. Emails sent: ${emailsSent}`);
+    } catch (error) {
+      console.error("Scheduled email check failed:", error);
+    }
+  }
+);
+
+const { getLinksFromLLM, isLinkValid } = require("./getLinks");
+
+exports.generateGiftLinksInAdvance = onSchedule(
+  { cors: true,
+    secrets: ["POSTMARK_API_KEY", "LLM_API_KEY"],
+  }, async (request, response) => {
+    const db = getFirestore();
+    const postmarkClient = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
+    debugger;
+    try {
+      const snapshot = await db.collection("personCards").get();
+      const now = new Date();
+      const soon = new Date(now);
+      soon.setDate(now.getDate() + 8);
+
+      let emailsSent = 0;
+
+      for (const doc of snapshot.docs) {
+        const data = doc.data();
+        if (!data.datesINeedAPresent || !Array.isArray(data.datesINeedAPresent)) continue;
+
+        for (const dateObj of data.datesINeedAPresent) {
+          const date = new Date(now.getFullYear(), dateObj.month, dateObj.day);
+          if (date >= now && date <= soon && data.userId && data.name) {
+            const toEmail = "robertjohnhill1@gmail.com";
+            // Only include interests if not null or empty
+            let interestsPart = "";
+            if (Array.isArray(data.interests) && data.interests.length > 0) {
+              interestsPart = ` with interests in ${data.interests.join(", ")}`;
+            }
+            let brandPart = "";
+            if (Array.isArray(data.brands) && data.brands.length > 0) {
+              brandPart = ` and likes brands like ${data.brands.join(", ")}`;
+            }
+            let previousPresentPart = "";
+            if (Array.isArray(data.previousPresent) && data.previousPresent.length > 0) {
+              previousPresentPart = ` and has previously liked gifts like ${data.previousPresents.join(", ")}`;
+            }
+            let budgetPart = "";
+            if (typeof data.budgetMin === "number" && typeof data.budgetMax === "number") {
+              budgetPart = ` with a budget between ${data.budgetMin} and ${data.budgetMax}`;
+            }
+            const prompt = `return only 3 links and no text to 3 unique websites/pages that will be suggested gift ideas for the following person, but make sure the links you return are not stale so aim for specific areas of websites (like the mens section of a fashion website for a man) that aren't removed often, not specific product links as they often break and 404. The person is a ${data.gender || "person"} aged ${data.age || "any age"}${interestsPart}${brandPart}${previousPresentPart}${budgetPart}. don't give more than 1 per website. Always Pre-validate with actual page fetches`;
+            const apiType = "bard"; // or "openai"
+            const apiKey = process.env.LLM_API_KEY || ""; // Use a secret for your LLM API key
+            let links = [];
+            let attempts = 0;
+            const maxAttempts = 3;
+            while (attempts < maxAttempts) {
+              attempts++;
+              links = await getLinksFromLLM(prompt, apiType, apiKey);
+              if (!Array.isArray(links) || links.length !== 3) break;
+              //TODO !!!!!!!!!!!!!!!!!!!!!!!! validate links !!!!!!!!!!!!!!!!!!!!
+              // Test each link
+              const results = await Promise.all(links.map(isLinkValid));
+              if (results.every(valid => valid)) break;
+            }
+            // Save the links to DB on the person object
+            if (links.length === 3) {
+              await db.collection("personCards").doc(doc.id).update({ giftLinks: links });
+            }
+            // Send the links to yourself
+            if (toEmail && links.length === 3) {
+              await postmarkClient.sendEmail({
+                From: "info@neverlateclub.com",
+                To: toEmail,
+                Subject: `Upcoming date for ${data.name}`,
+                TextBody: `You have an upcoming important date for ${data.name} on ${date.toDateString()}\nGift suggestions: ${links.join("\n")}`,
+                MessageStream: "outbound"
+              });
+              emailsSent++;
+            }
+          }
+        }
+      }
+
+      console.log(`Scheduled email check complete. Emails sent: ${emailsSent}`);
+    } catch (error) {
+      console.error("Scheduled email check failed:", error);
+    }
+  }
+);
+
+const { getValidLinksFromLLM } = require("./getLinks");
+exports.getValidLinksFromLLM = getValidLinksFromLLM;
 
 // const { sendwelcomemail1 } = require("./testfunc");
 // exports.sendwelcomemail1 = sendwelcomemail1;
