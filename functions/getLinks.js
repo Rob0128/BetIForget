@@ -21,15 +21,11 @@ async function getLinksFromLLM(prompt, apiType = "bard", apiKey = "") {
       })
     });
     const data = await response.json();
-    // Extract generated text from Gemini response
-    // Gemini returns: { candidates: [{ content: { parts: [{ text: "..." }] } }] }
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    // Extract links from the generated text
-    // Improved regex: match until whitespace or line break, but allow common URL characters
     const linkRegex = /(https?:\/\/[\w\-\.\?\,\'/\\\+&%\$#_=:@;~]+[\w\-\/])/g;
     return text.match(linkRegex)?.slice(0, 3) || [];
   }
-  // OpenAI (replace with real endpoint and auth)
+  // OpenAI
   if (apiType === "openai") {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -40,7 +36,26 @@ async function getLinksFromLLM(prompt, apiType = "bard", apiKey = "") {
       }),
     });
     const data = await response.json();
-    // Parse links from OpenAI response (customize as needed)
+    return extractLinksFromOpenAI(data);
+  }
+  // Perplexity Sonar
+  if (apiType === "sonar" || apiType === "perplexity") {
+    const response = await fetch("https://api.perplexity.ai/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "sonar-pro",
+        messages: [
+          { role: "user", content: prompt }
+        ]
+      })
+    });
+    const data = await response.json();
+    // Perplexity returns: { choices: [{ message: { content: "..." } }] }
     return extractLinksFromOpenAI(data);
   }
   throw new Error("Unsupported LLM API type");

@@ -159,7 +159,7 @@ const { getLinksFromLLM, isLinkValid } = require("./getLinks");
 
 exports.generateGiftLinksInAdvance = onSchedule(
   { cors: true,
-    secrets: ["POSTMARK_API_KEY", "LLM_API_KEY"],
+    secrets: ["POSTMARK_API_KEY", "LLM_API_KEY_SONAR"],
   }, async (request, response) => {
     const db = getFirestore();
     const postmarkClient = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
@@ -197,9 +197,9 @@ exports.generateGiftLinksInAdvance = onSchedule(
             if (typeof data.budgetMin === "number" && typeof data.budgetMax === "number") {
               budgetPart = ` with a budget between ${data.budgetMin} and ${data.budgetMax}`;
             }
-            const prompt = `return only 3 links and no text to 3 unique websites/pages that will be suggested gift ideas for the following person, but make sure the links you return are not stale so aim for specific areas of websites (like the mens section of a fashion website for a man) that aren't removed often, not specific product links as they often break and 404. The person is a ${data.gender || "person"} aged ${data.age || "any age"}${interestsPart}${brandPart}${previousPresentPart}${budgetPart}. don't give more than 1 per website. Always Pre-validate with actual page fetches`;
-            const apiType = "bard"; // or "openai"
-            const apiKey = process.env.LLM_API_KEY || ""; // Use a secret for your LLM API key
+            const prompt = `return only 3 links and no text to 3 unique product pages that will be suggested gift ideas for the following person, but make sure the links you return are working pages, not stale or 404 so never use amazon. The person is a ${data.gender || "person"} aged ${data.age || "any age"}${interestsPart}${brandPart}${previousPresentPart}${budgetPart}. don't give more than 1 per website. Always Pre-validate with actual page fetches`;
+            const apiType = "sonar";
+            const apiKey = process.env.LLM_API_KEY_SONAR || "";
             let links = [];
             let attempts = 0;
             const maxAttempts = 3;
@@ -217,16 +217,29 @@ exports.generateGiftLinksInAdvance = onSchedule(
               await db.collection("personCards").doc(doc.id).update({ giftLinks: links });
             }
             // Send the links to yourself
-            if (toEmail && links.length === 3) {
-              await postmarkClient.sendEmail({
-                From: "info@neverlateclub.com",
-                To: toEmail,
-                Subject: `Upcoming date for ${data.name}`,
-                TextBody: `You have an upcoming important date for ${data.name} on ${date.toDateString()}\nGift suggestions: ${links.join("\n")}`,
-                MessageStream: "outbound"
-              });
-              emailsSent++;
-            }
+              if (toEmail && links.length === 3) {
+                const htmlLinks = links.map(link => `<li style='margin-bottom:8px'><a href='${link}' style='color:#2563eb;text-decoration:none;font-weight:500'>${link}</a></li>`).join("");
+                const htmlBody = `
+                  <div style='font-family:Inter,Arial,sans-serif;background:#f8fafc;padding:32px;'>
+                    <div style='max-width:480px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px;'>
+                      <img src='https://neverlateclub.com/logo.png' alt='NeverLate Club' style='height:40px;margin-bottom:24px;'>
+                      <h2 style='color:#2563eb;font-size:1.5rem;margin-bottom:8px;'>Upcoming Date for ${data.name}</h2>
+                      <p style='color:#334155;font-size:1rem;margin-bottom:16px;'>You have an upcoming important date for <b>${data.name}</b> on <b>${date.toDateString()}</b>.</p>
+                      <h3 style='color:#2563eb;font-size:1.1rem;margin-bottom:8px;'>Gift Suggestions</h3>
+                      <ul style='padding-left:18px;margin-bottom:24px;'>${htmlLinks}</ul>
+                      <p style='color:#64748b;font-size:0.95rem;'>Powered by <b>NeverLate Club</b> — your personal gift reminder startup.</p>
+                    </div>
+                  </div>
+                `;
+                await postmarkClient.sendEmail({
+                  From: "info@neverlateclub.com",
+                  To: toEmail,
+                  Subject: `Upcoming date for ${data.name}`,
+                  HtmlBody: htmlBody,
+                  MessageStream: "outbound"
+                });
+                emailsSent++;
+              }
           }
         }
       }
