@@ -237,9 +237,13 @@ exports.generateGiftLinksInAdvance = onSchedule(
                 const htmlBody = `
                   <div style='font-family:Inter,Arial,sans-serif;background:#f8fafc;padding:32px;'>
                     <div style='max-width:480px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px;'>
-                      <h2 style='color:#2563eb;font-size:1.5rem;margin-bottom:8px;'>Upcoming Date for ${data.name}</h2>
+                      <div style='display:flex;align-items:center;gap:12px;margin-bottom:24px;'>
+                        <img src="https://neverlateclub.com/assets/present-DXIoIBk-.png" alt="NeverLate Club" style="height:40px;display:block;">
+                        <span style="font-size:1.2rem;font-weight:600;color:#f97316;line-height:40px;display:inline-block;vertical-align:middle;">NeverLate Club</span>
+                      </div>
+                      <h2 style='color:#f97316;font-size:1.5rem;margin-bottom:8px;'>Upcoming Date for ${data.name}</h2>
                       <p style='color:#334155;font-size:1rem;margin-bottom:16px;'>You have an upcoming important date for <b>${data.name}</b> on <b>${date.toDateString()}</b>.</p>
-                      <h3 style='color:#2563eb;font-size:1.1rem;margin-bottom:8px;'>Gift Suggestions</h3>
+                      <h3 style='color:#f97316;font-size:1.1rem;margin-bottom:8px;'>Gift Suggestions</h3>
                       <ul style='padding-left:0;margin-bottom:24px;'>${htmlLinks}</ul>
                       <p style='color:#64748b;font-size:0.95rem;'>Powered by <b>NeverLate Club</b> — your personal gift reminder startup.</p>
                     </div>
