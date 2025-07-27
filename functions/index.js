@@ -218,7 +218,22 @@ exports.generateGiftLinksInAdvance = onSchedule(
             }
             // Send the links to yourself
               if (toEmail && links.length === 3) {
-                const htmlLinks = links.map(link => `<li style='margin-bottom:8px'><a href='${link}' style='color:#2563eb;text-decoration:none;font-weight:500'>${link}</a></li>`).join("");
+                // Fetch og:image for each link
+                async function fetchOgImage(url) {
+                  try {
+                    const res = await fetch(url, { method: "GET", redirect: "follow" });
+                    const html = await res.text();
+                    const match = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"'>]+)["']/i) || html.match(/<meta[^>]+content=["']([^"'>]+)["'][^>]+property=["']og:image["']/i);
+                    return match ? match[1] : null;
+                  } catch {
+                    return null;
+                  }
+                }
+                const previews = await Promise.all(links.map(fetchOgImage));
+                const htmlLinks = links.map((link, i) => {
+                  const img = previews[i] ? `<img src='${previews[i]}' alt='Preview' style='max-width:100px;max-height:100px;display:block;margin-bottom:6px;border-radius:8px;border:1px solid #e5e7eb;'>` : "";
+                  return `<li style='margin-bottom:18px;list-style:none;'><a href='${link}' style='color:#2563eb;text-decoration:none;font-weight:500;word-break:break-all;'>${img}${link}</a></li>`;
+                }).join("");
                 const htmlBody = `
                   <div style='font-family:Inter,Arial,sans-serif;background:#f8fafc;padding:32px;'>
                     <div style='max-width:480px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px;'>
@@ -226,7 +241,7 @@ exports.generateGiftLinksInAdvance = onSchedule(
                       <h2 style='color:#2563eb;font-size:1.5rem;margin-bottom:8px;'>Upcoming Date for ${data.name}</h2>
                       <p style='color:#334155;font-size:1rem;margin-bottom:16px;'>You have an upcoming important date for <b>${data.name}</b> on <b>${date.toDateString()}</b>.</p>
                       <h3 style='color:#2563eb;font-size:1.1rem;margin-bottom:8px;'>Gift Suggestions</h3>
-                      <ul style='padding-left:18px;margin-bottom:24px;'>${htmlLinks}</ul>
+                      <ul style='padding-left:0;margin-bottom:24px;'>${htmlLinks}</ul>
                       <p style='color:#64748b;font-size:0.95rem;'>Powered by <b>NeverLate Club</b> — your personal gift reminder startup.</p>
                     </div>
                   </div>
