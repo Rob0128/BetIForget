@@ -41,7 +41,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {user && (
             <aside className="w-64 min-h-screen bg-gradient-to-b from-[#ffb86a] to-[#f19086] text-white p-0 hidden md:flex flex-col shadow-xl">
               <div className="flex flex-col items-center py-8 border-b border-white/20">
-                <span className="text-2xl font-extrabold tracking-tight text-white font-poppins">Forgettory</span>
+                <span className="text-2xl font-extrabold tracking-tight text-white font-poppins">Never Late Club</span>
                 <div className="mt-2 h-1 w-10 bg-white/60 rounded"></div>
                 {/* Submenu buttons */}
                 <div className="flex gap-2 mt-6">

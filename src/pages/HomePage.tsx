@@ -31,7 +31,7 @@ const HomePage = () => {
           <section className="flex flex-col items-center justify-center mt-16 mb-10">
             <div className="bg-white/90 border border-orange-100 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center gap-6 max-w-md w-full">
               <h1 className="text-3xl sm:text-4xl font-extrabold text-orange-500 font-poppins mb-2 text-center">
-                Welcome to Forgettory
+                Welcome to the never late club
               </h1>
               <p className="text-gray-600 text-lg text-center mb-2">
                 Sign in or create an account to manage your people, gifts, and

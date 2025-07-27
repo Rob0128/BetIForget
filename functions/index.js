@@ -237,7 +237,6 @@ exports.generateGiftLinksInAdvance = onSchedule(
                 const htmlBody = `
                   <div style='font-family:Inter,Arial,sans-serif;background:#f8fafc;padding:32px;'>
                     <div style='max-width:480px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px;'>
-                      <img src='https://neverlateclub.com/logo.png' alt='NeverLate Club' style='height:40px;margin-bottom:24px;'>
                       <h2 style='color:#2563eb;font-size:1.5rem;margin-bottom:8px;'>Upcoming Date for ${data.name}</h2>
                       <p style='color:#334155;font-size:1rem;margin-bottom:16px;'>You have an upcoming important date for <b>${data.name}</b> on <b>${date.toDateString()}</b>.</p>
                       <h3 style='color:#2563eb;font-size:1.1rem;margin-bottom:8px;'>Gift Suggestions</h3>

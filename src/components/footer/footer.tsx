@@ -4,7 +4,7 @@
     return (
 <footer className="w-full bg-gray-100 text-black border-t border-gray-200 py-6 flex flex-col items-center">
   <p className="text-sm text-center">
-    &copy; {new Date().getFullYear()} Forgettory. All rights reserved.
+    &copy; {new Date().getFullYear()} Never Late Club. All rights reserved.
   </p>
 
   {/* Link container - horizontal layout */}
