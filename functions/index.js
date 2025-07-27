@@ -235,17 +235,17 @@ exports.generateGiftLinksInAdvance = onSchedule(
                   return `<li style='margin-bottom:18px;list-style:none;'><a href='${link}' style='color:#2563eb;text-decoration:none;font-weight:500;word-break:break-all;'>${img}${link}</a></li>`;
                 }).join("");
                 const htmlBody = `
-                  <div style='font-family:Inter,Arial,sans-serif;background:#f8fafc;padding:32px;'>
-                    <div style='max-width:480px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px;'>
+                  <div style='font-family:Inter,Arial,sans-serif;background:linear-gradient(120deg,#f8fafc 60%,#f97316 100%);padding:32px;'>
+                    <div style='max-width:500px;margin:auto;background:#fff;border-radius:18px;box-shadow:0 4px 24px rgba(0,0,0,0.10);padding:36px 32px 32px 32px;'>
                       <div style='display:flex;align-items:center;gap:12px;margin-bottom:24px;'>
                         <img src="https://neverlateclub.com/assets/present-DXIoIBk-.png" alt="NeverLate Club" style="height:40px;display:block;">
                         <span style="font-size:1.2rem;font-weight:600;color:#f97316;line-height:40px;display:inline-block;vertical-align:middle;">NeverLate Club</span>
                       </div>
-                      <h2 style='color:#f97316;font-size:1.5rem;margin-bottom:8px;'>Upcoming Date for ${data.name}</h2>
-                      <p style='color:#334155;font-size:1rem;margin-bottom:16px;'>You have an upcoming important date for <b>${data.name}</b> on <b>${date.toDateString()}</b>.</p>
-                      <h3 style='color:#f97316;font-size:1.1rem;margin-bottom:8px;'>Gift Suggestions</h3>
-                      <ul style='padding-left:0;margin-bottom:24px;'>${htmlLinks}</ul>
-                      <p style='color:#64748b;font-size:0.95rem;'>Powered by <b>NeverLate Club</b> — your personal gift reminder startup.</p>
+                      <h2 style='color:#f97316;font-size:1.6rem;margin-bottom:10px;letter-spacing:-1px;'>Upcoming Date for ${data.name}</h2>
+                      <p style='color:#334155;font-size:1.05rem;margin-bottom:18px;'>You have an upcoming important date for <b>${data.name}</b> on <b>${date.toDateString()}</b>.</p>
+                      <h3 style='color:#f97316;font-size:1.13rem;margin-bottom:10px;'>Gift Suggestions</h3>
+                      <ul style='padding-left:0;margin-bottom:28px;'>${htmlLinks}</ul>
+                      <p style='color:#64748b;font-size:0.97rem;text-align:center;'>Powered by <b>NeverLate Club</b> — your personal gift reminder startup.</p>
                     </div>
                   </div>
                 `;
