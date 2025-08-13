@@ -78,7 +78,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 </div>
               </div>
               <div className="mt-auto px-6 pb-8 pt-6 border-t border-white/20 text-xs text-white/60 opacity-80 text-center">
-                &copy; {new Date().getFullYear()} Forgettory, Inc.
+                &copy; {new Date().getFullYear()} NeverLateClub, Inc.
               </div>
             </aside>
           )}

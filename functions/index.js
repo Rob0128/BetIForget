@@ -55,47 +55,52 @@ exports.helloWorld = onRequest(
   }
 });
 
+
+async function sendUpcomingDateEmails({ db, postmarkClient, soonDays, toEmailOverride }) {
+  const snapshot = await db.collection("personCards").get();
+  const now = new Date();
+  const soon = new Date(now);
+  soon.setDate(now.getDate() + soonDays);
+
+  let emailsSent = 0;
+
+  for (const doc of snapshot.docs) {
+    const data = doc.data();
+    if (!data.datesINeedAPresent || !Array.isArray(data.datesINeedAPresent)) continue;
+
+    for (const dateObj of data.datesINeedAPresent) {
+      // JS Date months are 0-based, so subtract 1 from month if your data is 1-based
+      const date = new Date(now.getFullYear(), dateObj.month - 1, dateObj.day);
+      if (date >= now && date <= soon && data.userId && data.name) {
+        const toEmail = toEmailOverride || data.email;
+        if (toEmail) {
+          await postmarkClient.sendEmail({
+            From: "info@neverlateclub.com",
+            To: toEmail,
+            Subject: `Upcoming date for ${data.name}`,
+            TextBody: `You have an upcoming important date for ${data.name} on ${date.toDateString()}.`,
+            MessageStream: "outbound"
+          });
+          emailsSent++;
+        }
+      }
+    }
+  }
+
+  return emailsSent;
+}
+
 exports.checkDatesAndSendEmailsDaily = onSchedule(
   {
-    schedule: "every day 21:22", // Runs every day at 9:22pm UTC
+    schedule: "every day 18:22", // Runs every day at 6:22pm UTC
     timeZone: "Etc/UTC",
     secrets: ["POSTMARK_API_KEY"],
   },
   async (event) => {
     const db = getFirestore();
     const postmarkClient = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
-
     try {
-      const snapshot = await db.collection("personCards").get();
-      const now = new Date();
-      const soon = new Date(now);
-      soon.setDate(now.getDate() + 7);
-
-      let emailsSent = 0;
-
-      for (const doc of snapshot.docs) {
-        const data = doc.data();
-        if (!data.datesINeedAPresent || !Array.isArray(data.datesINeedAPresent)) continue;
-
-        for (const dateObj of data.datesINeedAPresent) {
-          // JS Date months are 0-based, so subtract 1 from month if your data is 1-based
-          const date = new Date(now.getFullYear(), dateObj.month - 1, dateObj.day);
-          if (date >= now && date <= soon && data.userId && data.name) {
-            const toEmail = data.email;
-            if (toEmail) {
-              await postmarkClient.sendEmail({
-                From: "info@neverlateclub.com",
-                To: toEmail,
-                Subject: `Upcoming date for ${data.name}`,
-                TextBody: `You have an upcoming important date for ${data.name} on ${date.toDateString()}.`,
-                MessageStream: "outbound"
-              });
-              emailsSent++;
-            }
-          }
-      }
-      }
-
+      const emailsSent = await sendUpcomingDateEmails({ db, postmarkClient, soonDays: 9 });
       console.log(`Scheduled email check complete. Emails sent: ${emailsSent}`);
     } catch (error) {
       console.error("Scheduled email check failed:", error);
@@ -112,48 +117,16 @@ exports.generateGifts = onSchedule(
   async (event) => {
     const db = getFirestore();
     const postmarkClient = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
-
     try {
-      const snapshot = await db.collection("personCards").get();
-      const now = new Date();
-      const soon = new Date(now);
-      soon.setDate(now.getDate() + 8);
-
-      let emailsSent = 0;
-
-      for (const doc of snapshot.docs) {
-        const data = doc.data();
-        if (!data.datesINeedAPresent || !Array.isArray(data.datesINeedAPresent)) continue;
-
-        for (const dateObj of data.datesINeedAPresent) {
-          // JS Date months are 0-based, so subtract 1 from month if your data is 1-based
-          const date = new Date(now.getFullYear(), dateObj.month - 1, dateObj.day);
-          if (date >= now && date <= soon && data.userId && data.name) {
-            const toEmail = "robertjohnhill1@gmail.com";
-            // get suggestions links here
-            // check the links
-            // save the links to DB
-            // send them to me to check
-            if (toEmail) {
-              await postmarkClient.sendEmail({
-                From: "info@neverlateclub.com",
-                To: toEmail,
-                Subject: `Upcoming date for ${data.name}`,
-                TextBody: `You have an upcoming important date for ${data.name} on ${date.toDateString()}.`,
-                MessageStream: "outbound"
-              });
-              emailsSent++;
-            }
-          }
-      }
-      }
-
+      const emailsSent = await sendUpcomingDateEmails({ db, postmarkClient, soonDays: 11, toEmailOverride: "robertjohnhill1@gmail.com" });
       console.log(`Scheduled email check complete. Emails sent: ${emailsSent}`);
     } catch (error) {
       console.error("Scheduled email check failed:", error);
     }
   }
 );
+
+
 
 const { getLinksFromLLM, isLinkValid } = require("./getLinks");
 

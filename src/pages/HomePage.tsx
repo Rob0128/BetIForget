@@ -122,7 +122,7 @@ const HomePage = () => {
                 </h3>
                 <p className="text-gray-700 text-base font-medium">
                   Receive timely, intelligent reminders for upcoming events.
-                  Forgettory helps you plan ahead and avoid last-minute stress.
+                  NeverLateClub helps you plan ahead and avoid last-minute stress.
                 </p>
                 <span className="absolute left-2 top-2 text-3xl opacity-20 select-none">
                   💡
@@ -148,7 +148,7 @@ const HomePage = () => {
                 Make every occasion unforgettable 🎈
               </span>
               <span className="text-base text-gray-600 font-normal mt-2">
-                Join Forgettory today and become the friend who always remembers!
+                Join NeverLateClub today and become the friend who always remembers!
               </span>
             </div>
             {/* Fun animations */}

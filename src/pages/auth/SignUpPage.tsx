@@ -71,24 +71,24 @@ const SignUpPage = () => {
         </Link>
         <h1 className="text-3xl font-extrabold text-orange-500 mb-2 font-poppins">Sign Up</h1>
         <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
-          <input
-            name="email"
-            onChange={handleInputChange}
-            type="email"
-            placeholder="Email"
-            className="border border-orange-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 text-base bg-orange-50 placeholder:text-orange-300"
-            autoComplete="email"
-            required
-          />
-          <input
-            name="password"
-            onChange={handleInputChange}
-            type="password"
-            placeholder="Password"
-            className="border border-orange-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 text-base bg-orange-50 placeholder:text-orange-300"
-            autoComplete="new-password"
-            required
-          />
+              <input
+                name="email"
+                onChange={handleInputChange}
+                type="email"
+                placeholder="Email"
+                className="border border-orange-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-orange-50 placeholder:text-orange-300 text-orange-300"
+                autoComplete="email"
+                required
+              />
+              <input
+                name="password"
+                onChange={handleInputChange}
+                type="password"
+                placeholder="Password"
+                className="border border-orange-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-orange-50 placeholder:text-orange-300 text-orange-300"
+                autoComplete="new-password"
+                required
+              />
           <button
             type="submit"
             className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow transition text-lg mt-2"
