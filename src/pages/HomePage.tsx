@@ -169,7 +169,7 @@ const HomePage = () => {
                 don't forget your people.
               </h1>
               <p className="text-base sm:text-lg text-neutral-500 font-medium mb-1 w-full">
-                Keep track of everyone you care about and never miss a special
+                keep track of everyone you care about and never miss a special
                 date again.
               </p>
               <div className="h-1 w-24 bg-gradient-to-r from-orange-400 via-amber-400 to-orange-300 rounded-full mb-1"></div>

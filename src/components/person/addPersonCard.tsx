@@ -386,6 +386,7 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                   <div className="text-xs text-gray-500 mt-1">Press Enter to add "{brandInput}"</div>
                 )}
               </div>
+              <label className="block mb-1 font-medium">Gender</label>
               <select
                 className="border rounded px-2 py-1"
                 value={gender}

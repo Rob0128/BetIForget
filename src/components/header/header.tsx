@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <header className="w-full text-orange-300 px-8 py-5 flex justify-between items-center shadow-xl border-b border-orange-100/40">
       <Link to="/" className="text-2xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group select-none focus:outline-none" tabIndex={0}>
-        <span className="transition-colors">The Forgettening</span>
+        <span className="transition-colors">The Never Late Club</span>
         <img
           src={clockLogoImg}
           alt="present"
