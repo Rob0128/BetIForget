@@ -148,6 +148,11 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       setError("Name is required.");
       return;
     }
+    // Date validation - at least one date is required
+    if (dates.length === 0) {
+      setError("At least one important date is required so we can send you reminders.");
+      return;
+    }
     // Budget validation
     const min = Number(budgetMin);
     const max = Number(budgetMax);
@@ -432,6 +437,19 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                 onChange={e => setPreviousPresents(e.target.value)}
               />
               <div>
+                <label className="block mb-1 font-medium text-gray-700">
+                  Important Dates <span className="text-red-500">*</span>
+                </label>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
+                  <div className="flex items-start gap-2 mb-2">
+                    <svg className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-sm text-blue-700">
+                      Add important dates like birthdays or anniversaries. We'll send you reminders before these dates so you never forget to get a gift!
+                    </p>
+                  </div>
+                </div>
                 <div className="flex gap-2 items-center mb-2">
                   <select
                     value={month}
