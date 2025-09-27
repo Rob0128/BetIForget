@@ -163,112 +163,62 @@ const HomePage = () => {
       )}
       {user && (
         <>
-          <section className="max-w-4xl w-full mx-auto flex flex-col sm:flex-row items-center justify-between p-4 text-neutral-900 bg-white/20">
-            <div className="flex flex-col items-start flex-1 min-w-0 w-full">
-              <h1 className="text-4xl sm:text-5xl font-semibold text-orange-700 mb-1 tracking-tight font-poppins whitespace-normal break-words w-full">
-                don't forget your people.
-              </h1>
-              <p className="text-base sm:text-lg text-neutral-500 font-medium mb-1 w-full">
-                keep track of everyone you care about and never miss a special
-                date again.
-              </p>
-              <div className="h-1 w-24 bg-gradient-to-r from-orange-400 via-amber-400 to-orange-300 rounded-full mb-1"></div>
-            </div>
-            <div className="flex-shrink-0 mt-4 sm:mt-0 ml-0 sm:ml-8 w-full sm:w-auto max-w-xs">
-              <div className="flex justify-center w-full sm:w-auto">
+          <section className="max-w-5xl w-full mx-auto bg-white/40 rounded-2xl shadow-lg border border-orange-100 p-6 sm:p-8 mb-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div className="flex-1 space-y-3">
+                <h1 className="text-4xl sm:text-5xl font-bold text-orange-700 tracking-tight font-poppins leading-tight">
+                  Never Forget the People You Love
+                </h1>
+                <p className="text-lg text-gray-700 font-medium leading-relaxed">
+                  Keep track of everyone you care about and never miss a special date again. 
+                  {people.length === 0 ? "Get started by adding your first person below." : `You're tracking ${people.length} ${people.length === 1 ? 'person' : 'people'}.`}
+                </p>
+                <div className="h-1 w-32 bg-gradient-to-r from-orange-400 via-amber-400 to-orange-300 rounded-full"></div>
+              </div>
+              <div className="flex-shrink-0 w-full sm:w-auto">
                 <AddPersonCard onPersonAdded={refreshPeople} />
               </div>
             </div>
           </section>
-          {/* Onboarding instruction below header/add button if no people */}
+          {/* Onboarding section for new users */}
           {user && !loadingPeople && people.length === 0 && (
-            <div className="w-full flex flex-col items-center justify-center">
-              {/* Mobile: straight up arrow above text, not cut off */}
-              <div className="flex flex-col items-center justify-center sm:hidden">
-                <svg
-                  width="44"
-                  height="87"
-                  viewBox="0 0 54 64"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mb-1"
-                  style={{ display: "block", margin: "0 auto" }}
-                >
-                  <path
-                    d="M22 58 V10"
-                    stroke="#fb923c"
-                    strokeWidth="6"
-                    fill="none"
-                    markerEnd="url(#arrowheadMobile)"
-                  />
-                  <defs>
-                    <marker
-                      id="arrowheadMobile"
-                      markerWidth="12"
-                      markerHeight="12"
-                      refX="6"
-                      refY="6"
-                      orient="auto"
-                      markerUnits="strokeWidth"
-                    >
-                      <path d="M2,2 L10,6 L2,10 L6,6 L2,2" fill="#fb923c" />
-                    </marker>
-                  </defs>
-                </svg>
-                <span
-                  className="text-orange-700 font-bold text-lg bg-white/90 px-5 py-2 rounded-2xl shadow border border-orange-200"
-                  style={{ maxWidth: "320px" }}
-                >
-                  start by adding your first person
-                </span>
-              </div>
-              {/* Desktop: text then arrow to the right, no space between */}
-              <div className="hidden sm:flex flex-row items-center justify-center gap-0 ml-32">
-                <span
-                  className="text-orange-700 font-bold text-lg bg-white/90 px-5 py-2 rounded-2xl shadow border border-orange-200"
-                  style={{ maxWidth: "320px" }}
-                >
-                  start by adding your first person
-                </span>
-                <svg
-                  width="100"
-                  height="70"
-                  viewBox="0 0 100 100"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="-mt-4"
-                  style={{ transform: "rotate(180deg)" }}
-                >
-                  <path
-                    d="M95 35 Q60 10 10 60"
-                    stroke="#fb923c"
-                    strokeWidth="7"
-                    fill="none"
-                    markerEnd="url(#arrowhead)"
-                  />
-                  <defs>
-                    <marker
-                      id="arrowhead"
-                      markerWidth="12"
-                      markerHeight="12"
-                      refX="6"
-                      refY="6"
-                      orient="auto"
-                      markerUnits="strokeWidth"
-                    >
-                      <path d="M2,2 L10,6 L2,10 L6,6 L2,2" fill="#fb923c" />
-                    </marker>
-                  </defs>
-                </svg>
+            <div className="max-w-4xl w-full mx-auto">
+              <div className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 rounded-2xl border-2 border-dashed border-orange-200 p-8 text-center">
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
+                    <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-orange-700 font-poppins">
+                    Let's Get Started!
+                  </h3>
+                  <p className="text-gray-600 max-w-md">
+                    Add your first person to start tracking important dates like birthdays, anniversaries, and special occasions. We'll send you timely reminders so you never miss a moment that matters.
+                  </p>
+                  <div className="flex items-center gap-2 text-sm text-orange-600 bg-orange-100 px-4 py-2 rounded-full">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Click the "Add person" button above to begin</span>
+                  </div>
+                </div>
               </div>
             </div>
           )}
           <div className="w-full overflow-x-hidden">
-            <DisplayPeople
-              people={people}
-              loadingPeople={loadingPeople}
-              onPersonDeleted={refreshPeople}
-            />
+            {loadingPeople ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mb-4"></div>
+                <p className="text-gray-600 font-medium">Loading your people...</p>
+              </div>
+            ) : (
+              <DisplayPeople
+                people={people}
+                loadingPeople={loadingPeople}
+                onPersonDeleted={refreshPeople}
+              />
+            )}
           </div>
         </>
       )}

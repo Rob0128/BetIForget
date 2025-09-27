@@ -266,34 +266,45 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
       {/* Modal */}
       {showPopup && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black/60 z-50"
+          className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"
           onClick={() => setShowPopup(false)}
         >
           <div
-            className="max-w-md w-full mx-auto bg-white rounded-2xl shadow-2xl border border-orange-200 flex flex-col items-center p-8 text-gray-900 relative animate-fadeIn"
+            className="max-w-md w-full bg-white rounded-2xl shadow-2xl border border-orange-200 text-gray-900 relative animate-fadeIn max-h-[90vh] overflow-hidden flex flex-col"
             onClick={e => e.stopPropagation()}
           >
-            <button
-              className="absolute top-3 right-3 text-orange-400 hover:text-orange-600 text-2xl font-bold bg-orange-50 rounded-full w-9 h-9 flex items-center justify-center shadow border border-orange-100 transition"
-              onClick={() => setShowPopup(false)}
-              aria-label="Close"
-            >
-              ×
-            </button>
-            <h3 className="text-2xl font-extrabold mb-4 text-orange-500">New Person</h3>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
-              <input
-                type="text"
-                placeholder="Name"
-                className="border rounded px-2 py-1"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                required
-              />
+            <div className="flex-shrink-0 p-6 sm:p-8 pb-4 relative">
+              <button
+                className="absolute top-3 right-3 text-orange-400 hover:text-orange-600 text-2xl font-bold bg-orange-50 rounded-full w-9 h-9 flex items-center justify-center shadow border border-orange-100 transition"
+                onClick={() => setShowPopup(false)}
+                aria-label="Close"
+              >
+                ×
+              </button>
+              <h3 className="text-2xl font-extrabold mb-2 text-orange-500">New Person</h3>
+              <p className="text-gray-600 text-sm text-center">Add someone important to you and we'll help you remember their special dates</p>
+            </div>
+            <div className="flex-1 overflow-y-auto px-6 sm:px-8 pb-6 sm:pb-8">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
+              <div className="space-y-1">
+                <label className="block text-sm font-medium text-gray-700">
+                  Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g., Sarah Johnson"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  required
+                  autoFocus
+                />
+              </div>
               {/* Interests tag input */}
-              <div>
-                <label className="block mb-1 font-medium">Interests</label>
-                <div className="flex flex-wrap gap-2 mb-2">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">Interests</label>
+                <p className="text-xs text-gray-500">What do they like? This helps us suggest better gifts</p>
+                <div className="flex flex-wrap gap-2 mb-3 min-h-[2rem]">
                   {interests.map((tag, idx) => (
                     <span key={tag + '-' + idx} className="bg-blue-200 text-blue-800 px-2 py-1 rounded-full flex items-center">
                       {tag}
@@ -312,8 +323,8 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                   <input
                     ref={inputRef}
                     type="text"
-                    className="border rounded px-2 py-1 w-full"
-                    placeholder="Type to search or add..."
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                    placeholder="Type to search or add interests..."
                     value={interestInput}
                     onChange={e => setInterestInput(e.target.value)}
                     onKeyDown={e => {
@@ -342,9 +353,10 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                 )}
               </div>
               {/* Brands tag input */}
-              <div>
-                <label className="block mb-1 font-medium">Brands</label>
-                <div className="flex flex-wrap gap-2 mb-2">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">Favorite Brands</label>
+                <p className="text-xs text-gray-500">Brands they love - helps narrow down gift ideas</p>
+                <div className="flex flex-wrap gap-2 mb-3 min-h-[2rem]">
                   {brands.map((brand, idx) => (
                     <span key={brand + '-' + idx} className="bg-green-200 text-green-800 px-2 py-1 rounded-full flex items-center">
                       {brand}
@@ -362,8 +374,8 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                 <div className="relative">
                   <input
                     type="text"
-                    className="border rounded px-2 py-1 w-full"
-                    placeholder="Type to search or add..."
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                    placeholder="Type to search or add brands..."
                     value={brandInput}
                     onChange={e => setBrandInput(e.target.value)}
                     onKeyDown={e => {
@@ -391,51 +403,73 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                   <div className="text-xs text-gray-500 mt-1">Press Enter to add "{brandInput}"</div>
                 )}
               </div>
-              <label className="block mb-1 font-medium">Gender</label>
-              <select
-                className="border rounded px-2 py-1"
-                value={gender}
-                onChange={e => setGender(e.target.value as Gender)}
-                required
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Age"
-                className="border rounded px-2 py-1"
-                value={age}
-                onChange={e => setAge(e.target.value)}
-              />
-              <div className="flex gap-2">
-                <input
-                  type="number"
-                  placeholder="Budget Min"
-                  className="border rounded px-2 py-1 w-1/2"
-                  value={budgetMin}
-                  onChange={e => setBudgetMin(e.target.value)}
-                  min={1}
-                  required
-                />
-                <input
-                  type="number"
-                  placeholder="Budget Max"
-                  className="border rounded px-2 py-1 w-1/2"
-                  value={budgetMax}
-                  onChange={e => setBudgetMax(e.target.value)}
-                  min={1}
-                  required
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700">Gender</label>
+                  <select
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                    value={gender}
+                    onChange={e => setGender(e.target.value as Gender)}
+                    required
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700">Age</label>
+                  <input
+                    type="text"
+                    placeholder="25"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                    value={age}
+                    onChange={e => setAge(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Budget Range <span className="text-red-500">*</span>
+                </label>
+                <p className="text-xs text-gray-500">How much do you typically spend on gifts for them?</p>
+                <div className="flex gap-3 items-center">
+                  <div className="flex-1">
+                    <input
+                      type="number"
+                      placeholder="Min ($)"
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                      value={budgetMin}
+                      onChange={e => setBudgetMin(e.target.value)}
+                      min={1}
+                      required
+                    />
+                  </div>
+                  <span className="text-gray-400 font-medium">to</span>
+                  <div className="flex-1">
+                    <input
+                      type="number"
+                      placeholder="Max ($)"
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                      value={budgetMax}
+                      onChange={e => setBudgetMax(e.target.value)}
+                      min={1}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="block text-sm font-medium text-gray-700">Previous Presents</label>
+                <p className="text-xs text-gray-500">What have you given them before? Helps avoid repeats</p>
+                <textarea
+                  placeholder="e.g., Watch (2023), Book collection (2022)..."
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 resize-none"
+                  value={previousPresents}
+                  onChange={e => setPreviousPresents(e.target.value)}
+                  rows={3}
                 />
               </div>
-              <input
-                type="text"
-                placeholder="Previous Presents"
-                className="border rounded px-2 py-1"
-                value={previousPresents}
-                onChange={e => setPreviousPresents(e.target.value)}
-              />
               <div>
                 <label className="block mb-1 font-medium text-gray-700">
                   Important Dates <span className="text-red-500">*</span>
@@ -450,57 +484,92 @@ const AddPersonCard = ({ onPersonAdded }: { onPersonAdded: () => void }) => {
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-2 items-center mb-2">
-                  <select
-                    value={month}
-                    onChange={e => setMonth(Number(e.target.value))}
-                    className="border rounded px-2 py-1"
-                  >
-                    {Array.from({ length: 12 }).map((_, i) => (
-                      <option key={i} value={i}>
-                        {new Date(0, i).toLocaleString('default', { month: 'long' })}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="number"
-                    min={1}
-                    max={31}
-                    value={day}
-                    onChange={e => setDay(Number(e.target.value))}
-                    className="border rounded px-2 py-1 w-16"
-                  />
-                  <button
-                    type="button"
-                    className="bg-green-500 text-white px-2 py-1 rounded cursor-pointer hover:bg-green-600"
-                    onClick={handleAddDate}
-                  >
-                    Add Date
-                  </button>
-                </div>
-                <ul className="list-disc list-inside">
-                  {dates.map((d, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      {`${d.day}/${d.month + 1}`}
-                      <button
-                        type="button"
-                        className="text-red-500 ml-2"
-                        onClick={() => handleRemoveDate(i)}
+                <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                  <div className="flex gap-3 items-end">
+                    <div className="flex-1">
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Month</label>
+                      <select
+                        value={month}
+                        onChange={e => setMonth(Number(e.target.value))}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                       >
-                        Remove
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                        {Array.from({ length: 12 }).map((_, i) => (
+                          <option key={i} value={i}>
+                            {new Date(0, i).toLocaleString('default', { month: 'long' })}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="w-20">
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Day</label>
+                      <input
+                        type="number"
+                        min={1}
+                        max={31}
+                        value={day}
+                        onChange={e => setDay(Number(e.target.value))}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:border-transparent text-center"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1"
+                      onClick={handleAddDate}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                      </svg>
+                      Add
+                    </button>
+                  </div>
+                {dates.length > 0 && (
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-gray-600">Added Dates:</p>
+                    <div className="space-y-2">
+                      {dates.map((d, i) => (
+                        <div key={i} className="flex items-center justify-between bg-white rounded-lg px-3 py-2 border border-gray-200">
+                          <span className="text-sm font-medium text-gray-700">
+                            {new Date(0, d.month).toLocaleString('default', { month: 'long' })} {d.day}
+                          </span>
+                          <button
+                            type="button"
+                            className="text-red-500 hover:text-red-700 text-sm font-medium transition-colors"
+                            onClick={() => handleRemoveDate(i)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                </div>
               </div>
-              {error && <div className="text-red-500">{error}</div>}
-              <button
-                type="submit"
-                className="bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow transition text-lg mt-2"
-              >
-                Save Person
-              </button>
-            </form>
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
+                  <svg className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.732 15.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                  <p className="text-sm text-red-700">{error}</p>
+                </div>
+              )}
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors duration-200"
+                  onClick={() => setShowPopup(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-2 bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-[1.02]"
+                >
+                  Save Person
+                </button>
+              </div>
+              </form>
+            </div>
           </div>
         </div>
       )}

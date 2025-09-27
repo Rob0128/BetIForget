@@ -89,7 +89,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     alt="present"
                     className="w-10 h-10 sm:w-14 sm:h-14 rounded-full align-middle group-hover:scale-105 transition-transform"
                   />
-                  <span className="transition-colors whitespace-nowrap text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400">the NeverLateClub</span>
+                  <span className="transition-colors whitespace-nowrap text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400">time to remember</span>
                 </a>
                 {/* Mobile burger menu: classic hamburger icon, aligned with logo/title */}
                 <div className="flex md:hidden items-center ml-auto">
