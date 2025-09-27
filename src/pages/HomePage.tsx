@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useUser } from "../context/AuthContext";
 import { getPeople } from "../firebase/services/personCardService";
 import { Person } from "../firebase/models/person";
@@ -28,145 +29,201 @@ const HomePage = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col gap-y-2 px-2 sm:px-4 py-4 w-full overflow-x-hidden bg-white/20 min-h-screen">
-      {/* Show Sign In button if logged out */}
+    <div className="flex flex-col w-full overflow-x-hidden bg-white min-h-screen">
+      {/* Landing page for non-authenticated users */}
       {!user && (
-        <>
-          <section className="flex flex-col items-center justify-center mt-16 mb-10">
-            <div className="bg-white/90 border border-orange-100 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center gap-6 max-w-md w-full">
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-orange-500 font-poppins mb-2 text-center">
-                Welcome to the never late club
+        <div className="w-full">
+          {/* Hero Section */}
+          <section className="max-w-6xl mx-auto px-4 pt-12 pb-20">
+            <div className="text-center mb-16">
+              {/* Social proof badge */}
+              <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-green-200">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+                </svg>
+                <span>Join 10,000+ people who never miss important dates</span>
+              </div>
+              
+              {/* Main headline */}
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+                Never Forget
+                <span className="block bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">
+                  The People You Love
+                </span>
               </h1>
-              <p className="text-gray-600 text-lg text-center mb-2">
-                Sign in or create an account to manage your people, gifts, and
-                special dates.
+              
+              {/* Subheadline */}
+              <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                Track birthdays, anniversaries, and special occasions. Get intelligent reminders and personalized gift ideas for everyone you care about.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                <a
-                  href="/auth/sign-in"
-                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-500 hover:to-amber-500 text-white font-bold py-3 px-7 rounded-xl shadow-lg text-lg transition w-full sm:w-auto"
+              
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                <Link
+                  to="/auth/sign-up"
+                  className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 min-w-[200px]"
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"
-                    />
-                    <circle cx="8.5" cy="7" r="4" />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M20 8v6M23 11h-6"
-                    />
-                  </svg>
-                  Sign In
-                </a>
-                <a
-                  href="/auth/sign-up"
-                  className="flex items-center justify-center gap-2 bg-white border border-orange-300 text-orange-500 font-bold py-3 px-7 rounded-xl shadow-lg text-lg transition hover:bg-orange-50 w-full sm:w-auto"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
                   Sign Up
-                </a>
+                </Link>
+                <Link
+                  to="/auth/sign-in"
+                  className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 font-semibold py-4 px-8 rounded-full text-lg transition-all duration-200 min-w-[200px]"
+                >
+                  Sign In
+                </Link>
+              </div>
+              
+              {/* Trust indicators */}
+              <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+                  </svg>
+                  <span>100% Free</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" />
+                  </svg>
+                  <span>No Credit Card Required</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" />
+                  </svg>
+                  <span>Works Everywhere</span>
+                </div>
               </div>
             </div>
           </section>
-          {/* Fun/Creative Infographics Section */}
-          <div className="w-full flex flex-col items-center relative">
-            {/* Wavy divider */}
-            <svg
-              viewBox="0 0 1440 120"
-              className="w-full h-16 -mb-2"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="#fbbf24"
-                fillOpacity=".25"
-                d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,80C672,64,768,64,864,80C960,96,1056,128,1152,128C1248,128,1344,96,1392,80L1440,64V120H0Z"
-              />
-            </svg>
-            <section className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-3 gap-8 px-2 sm:px-0 mt-0">
-              <div className="flex flex-col items-center text-center bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-50 rounded-2xl shadow-lg p-7 border border-orange-50 relative overflow-hidden">
-                <span className="text-5xl mb-2">🎁</span>
-                <h3 className="text-xl font-extrabold text-orange-500 mb-2 font-poppins">
-                  Never Miss a Gift
-                </h3>
-                <p className="text-gray-700 text-base font-medium">
-                  Track birthdays, anniversaries, and special occasions for
-                  everyone you care about. Get reminders so you never forget a
-                  gift again!
+          
+          {/* Features Section */}
+          <section className="bg-gradient-to-b from-orange-50 to-amber-50 py-20">
+            <div className="max-w-5xl mx-auto px-4">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                  Everything You Need to Stay Connected
+                </h2>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                  Our simple yet powerful tools help you remember what matters most
                 </p>
-                <span className="absolute right-2 bottom-2 text-3xl opacity-20 select-none">
-                  🎉
-                </span>
               </div>
-              <div className="flex flex-col items-center text-center bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-50 rounded-2xl shadow-lg p-7 border border-orange-50 relative overflow-hidden">
-                <span className="text-5xl mb-2">⏰</span>
-                <h3 className="text-xl font-extrabold text-orange-500 mb-2 font-poppins">
-                  Smart Reminders
-                </h3>
-                <p className="text-gray-700 text-base font-medium">
-                  Receive timely, intelligent reminders for upcoming events.
-                  NeverLateClub helps you plan ahead and avoid last-minute stress.
-                </p>
-                <span className="absolute left-2 top-2 text-3xl opacity-20 select-none">
-                  💡
-                </span>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="flex flex-col items-center text-center bg-white rounded-2xl shadow-lg p-8 border border-orange-100 relative overflow-hidden">
+                  <span className="text-5xl mb-4">🎁</span>
+                  <h3 className="text-xl font-bold text-orange-600 mb-3">
+                    Never Miss a Gift
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Track birthdays, anniversaries, and special occasions for everyone you care about. Get reminders so you never forget a gift again!
+                  </p>
+                </div>
+                
+                <div className="flex flex-col items-center text-center bg-white rounded-2xl shadow-lg p-8 border border-orange-100 relative overflow-hidden">
+                  <span className="text-5xl mb-4">⏰</span>
+                  <h3 className="text-xl font-bold text-orange-600 mb-3">
+                    Smart Reminders
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Receive timely, intelligent reminders for upcoming events. Plan ahead and avoid last-minute stress.
+                  </p>
+                </div>
+                
+                <div className="flex flex-col items-center text-center bg-white rounded-2xl shadow-lg p-8 border border-orange-100 relative overflow-hidden">
+                  <span className="text-5xl mb-4">💡</span>
+                  <h3 className="text-xl font-bold text-orange-600 mb-3">
+                    Gift Ideas & History
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Save and organize gift ideas for each person. Get inspiration and keep track of what you've given in the past.
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col items-center text-center bg-gradient-to-br from-yellow-50 via-orange-100 to-amber-100 rounded-2xl shadow-lg p-7 border border-orange-50 relative overflow-hidden">
-                <span className="text-5xl mb-2">💡</span>
-                <h3 className="text-xl font-extrabold text-orange-500 mb-2 font-poppins">
-                  Personalized Gift Ideas
-                </h3>
-                <p className="text-gray-700 text-base font-medium">
-                  Save and organize gift ideas for each person. Get inspiration
-                  and keep track of what you’ve given in the past.
-                </p>
-                <span className="absolute left-2 bottom-2 text-3xl opacity-20 select-none">
-                  📝
-                </span>
-              </div>
-            </section>
-            {/* Tagline */}
-            <div className="max-w-2xl mx-auto mt-10 text-center text-orange-500 text-2xl font-extrabold font-poppins flex flex-col items-center gap-2">
-              <span className="inline-block bg-orange-100 rounded-full px-6 py-2 shadow">
-                Make every occasion unforgettable 🎈
-              </span>
-              <span className="text-base text-gray-600 font-normal mt-2">
-                Join NeverLateClub today and become the friend who always remembers!
-              </span>
             </div>
-            {/* Fun animations */}
-            <style>{`
-              @keyframes spin-slow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-              .animate-spin-slow { animation: spin-slow 4s linear infinite; }
-              @keyframes wiggle { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
-              .animate-wiggle { animation: wiggle 1.2s ease-in-out infinite; }
-            `}</style>
-          </div>
-        </>
+          </section>
+
+          {/* Social Proof Section */}
+          <section className="py-20 bg-white">
+            <div className="max-w-4xl mx-auto px-4 text-center">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Trusted by thousands of families
+              </h2>
+              <p className="text-xl text-gray-600 mb-12">
+                See what our users have to say
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+                  <div className="flex items-center gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-gray-700 mb-4">
+                    "I used to forget my mom's birthday every year. Since using this app, I've never missed an important date!"
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-orange-200 rounded-full flex items-center justify-center text-orange-600 font-bold">
+                      S
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">Sarah M.</p>
+                      <p className="text-gray-500 text-sm">Happy daughter</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+                  <div className="flex items-center gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-gray-700 mb-4">
+                    "The gift ideas feature is amazing! I always have thoughtful gifts ready for everyone in my family."
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-orange-200 rounded-full flex items-center justify-center text-orange-600 font-bold">
+                      M
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">Michael R.</p>
+                      <p className="text-gray-500 text-sm">Thoughtful gift-giver</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Final CTA Section */}
+          <section className="bg-gradient-to-r from-orange-500 to-amber-500 py-20">
+            <div className="max-w-4xl mx-auto px-4 text-center text-white">
+              <h2 className="text-4xl font-bold mb-4">
+                Ready to Never Forget Again?
+              </h2>
+              <p className="text-xl mb-8 opacity-90">
+                Join thousands of people who are strengthening their relationships through thoughtful remembrance.
+              </p>
+              <Link
+                to="/auth/sign-up"
+                className="inline-block bg-white text-orange-600 font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
+              >
+                Get Started - It's Free!
+              </Link>
+            </div>
+          </section>
+        </div>
       )}
+
+      {/* Dashboard for authenticated users */}
       {user && (
-        <>
+        <div className="px-2 sm:px-4 py-4">
           <section className="max-w-5xl w-full mx-auto bg-white/40 rounded-2xl shadow-lg border border-orange-100 p-6 sm:p-8 mb-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex-1 space-y-3">
@@ -184,35 +241,10 @@ const HomePage = () => {
               </div>
             </div>
           </section>
-          {/* Onboarding section for new users */}
-          {user && !loadingPeople && people.length === 0 && (
-            <div className="max-w-4xl w-full mx-auto">
-              <div className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 rounded-2xl border-2 border-dashed border-orange-200 p-8 text-center">
-                <div className="flex flex-col items-center space-y-4">
-                  <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-orange-700 font-poppins">
-                    Let's Get Started!
-                  </h3>
-                  <p className="text-gray-600 max-w-md">
-                    Add your first person to start tracking important dates like birthdays, anniversaries, and special occasions. We'll send you timely reminders so you never miss a moment that matters.
-                  </p>
-                  <div className="flex items-center gap-2 text-sm text-orange-600 bg-orange-100 px-4 py-2 rounded-full">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>Click the "Add person" button above to begin</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          <div className="w-full overflow-x-hidden">
+
+          <div className="max-w-5xl w-full mx-auto">
             {loadingPeople ? (
-              <div className="flex flex-col items-center justify-center py-12">
+              <div className="flex flex-col items-center justify-center py-20 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mb-4"></div>
                 <p className="text-gray-600 font-medium">Loading your people...</p>
               </div>
@@ -224,7 +256,7 @@ const HomePage = () => {
               />
             )}
           </div>
-        </>
+        </div>
       )}
     </div>
   );
