@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, setDoc, doc, deleteDoc, query, where } from "firebase/firestore";
 import { FirebaseFirestore } from "../index";
 import { Person } from "../models/person";
 
@@ -13,8 +13,17 @@ export const addPerson = async (card: Person) => {
   }
 };
 
-export const getPeople = async () => {
-  const querySnapshot = await getDocs(collection(FirebaseFirestore, "personCards"));
+export const getPeople = async (userId: string) => {
+  if (!userId) {
+    throw new Error("User ID is required to fetch people");
+  }
+  
+  const q = query(
+    collection(FirebaseFirestore, "personCards"),
+    where("userId", "==", userId)
+  );
+  
+  const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(doc => {
     const data = doc.data();
     return {
@@ -28,7 +37,8 @@ export const getPeople = async () => {
       budgetMax: data.budgetMax,
       interests: data.interests,
       userId: data.userId,
-      brands: data.brands, // <-- FIX: include brands field
+      brands: data.brands,
+      email: data.email,
     } as Person;
   });
 };

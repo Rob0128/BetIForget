@@ -14,8 +14,12 @@ const HomePage = () => {
   const refreshPeople = () => {
     if (!user) return;
     setLoadingPeople(true);
-    getPeople()
+    getPeople(user.uid)
       .then((data) => setPeople(data))
+      .catch((error) => {
+        console.error("Error fetching people:", error);
+        setPeople([]);
+      })
       .finally(() => setLoadingPeople(false));
   };
 
