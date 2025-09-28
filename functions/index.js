@@ -43,7 +43,7 @@ exports.helloWorld = onRequest(
     await postmarkClient.sendEmail({
       From: "info@neverlateclub.com",
       To: email,
-      Subject: "Welcome to NeverLate Club!",
+      Subject: "Welcome to Never Late Club!",
       TextBody: "Thanks for signing up. We're thrilled to have you.",
       MessageStream: "outbound"
     });
@@ -211,14 +211,14 @@ exports.generateGiftLinksInAdvance = onSchedule(
                   <div style='font-family:Inter,Arial,sans-serif;background:linear-gradient(120deg,#f8fafc 60%,#f97316 100%);padding:32px;'>
                     <div style='max-width:500px;margin:auto;background:#fff;border-radius:18px;box-shadow:0 4px 24px rgba(0,0,0,0.10);padding:36px 32px 32px 32px;'>
                       <div style='display:flex;align-items:center;gap:12px;margin-bottom:24px;'>
-                        <img src="https://neverlateclub.com/assets/present-DXIoIBk-.png" alt="NeverLate Club" style="height:40px;display:block;">
-                        <span style="font-size:1.2rem;font-weight:600;color:#f97316;line-height:40px;display:inline-block;vertical-align:middle;">NeverLate Club</span>
+                        <img src="https://neverlateclub.com/assets/present-DXIoIBk-.png" alt="Never Late Club" style="height:40px;display:block;">
+                        <span style="font-size:1.2rem;font-weight:600;color:#f97316;line-height:40px;display:inline-block;vertical-align:middle;">Never Late Club</span>
                       </div>
                       <h2 style='color:#f97316;font-size:1.6rem;margin-bottom:10px;letter-spacing:-1px;'>Upcoming Date for ${data.name}</h2>
                       <p style='color:#334155;font-size:1.05rem;margin-bottom:18px;'>You have an upcoming important date for <b>${data.name}</b> on <b>${date.toDateString()}</b>.</p>
                       <h3 style='color:#f97316;font-size:1.13rem;margin-bottom:10px;'>Gift Suggestions</h3>
                       <ul style='padding-left:0;margin-bottom:28px;'>${htmlLinks}</ul>
-                      <p style='color:#64748b;font-size:0.97rem;text-align:center;'>Powered by <b>NeverLate Club</b> — your personal gift reminder startup.</p>
+                      <p style='color:#64748b;font-size:0.97rem;text-align:center;'>Powered by <b>Never Late Club</b> — your personal gift reminder startup.</p>
                     </div>
                   </div>
                 `;

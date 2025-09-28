@@ -14,7 +14,7 @@ exports.sendwelcomemail1 = onCall({ cors: true }, async (data, context) => {
     await postmarkClient.sendEmail({
       From: "info@neverlateclub.com",
       To: email,
-      Subject: "Welcome to NeverLate Club!",
+      Subject: "Welcome to Never Late Club!",
       TextBody: "Thanks for signing up. We're thrilled to have you.",
       MessageStream: "default_transactional"
     });

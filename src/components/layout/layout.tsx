@@ -41,7 +41,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {user && (
             <aside className="w-64 min-h-screen bg-gradient-to-b from-[#ffb86a] to-[#f19086] text-white p-0 hidden md:flex flex-col shadow-xl">
               <div className="flex flex-col items-center py-8 border-b border-white/20">
-                <span className="text-2xl font-extrabold tracking-tight text-white font-poppins">Never Late Club</span>
+                <span className="text-2xl font-extrabold tracking-tight text-white font-poppins">Reminder time</span>
                 <div className="mt-2 h-1 w-10 bg-white/60 rounded"></div>
                 {/* Submenu buttons */}
               </div>
@@ -89,7 +89,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     alt="present"
                     className="w-10 h-10 sm:w-14 sm:h-14 rounded-full align-middle group-hover:scale-105 transition-transform"
                   />
-                  <span className="transition-colors whitespace-nowrap text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400">time to remember</span>
+                  <span className="transition-colors whitespace-nowrap text-2xl sm:text-3xl font-extrabold flex items-center gap-2 tracking-tight font-poppins group text-orange-400">Never Late Club</span>
                 </a>
                 {/* Mobile burger menu: classic hamburger icon, aligned with logo/title */}
                 <div className="flex md:hidden items-center ml-auto">
